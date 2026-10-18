@@ -2,6 +2,26 @@
 
 An original, buildless Traditional Chinese browser game. Open the deployed Site, or serve `dist/` with any static HTTP server (`python -m http.server --directory dist 8765`). No build step, backend, paid API, or user account inside the game.
 
+## 致謝與靈感
+
+感謝 Jin’s Earth 製作的 [《80 億分之一》](https://1in8b.life/zh/)。看見這個作品後，我請 Agent Dorami 一起做一款自己的遊戲，於是有了《地球轉生所》。
+
+原作讓我開始想：如果重新抽一次生命，能遇見什麼樣的世界？我想把這個問題帶得更遠，走進史前與不同時代，也走進不同物種的生命。
+
+這裡致謝的是原作網站與它帶來的靈感。本專案沒有複製原作的程式碼、美術、文字或資料，也不是原作的 fork。
+
+## 創作理念
+
+AI 大幅降低了把想法做出來的門檻。但能做出來之後，更重要的問題是：自己想做什麼？希望玩家經歷什麼？
+
+我想做的是把自己的想法放進遊戲，讓靈感繼續長出新的可能。從人類的一生，擴展到不同年代、棲地與物種，試著換一個生命的角度看地球。
+
+**一生不一定是人生。**
+
+所以這裡的轉生，可能發生在史前，也可能成為動物、植物，或其他平常不會留意的生命。遊戲裡的選擇與結果，是邀請玩家想像另一種處境，不是科學上的出生機率或命運預測。
+
+還有一些想傳達的東西，留在遊戲裡，等你自己發現。
+
 ## Design
 - Cream, sage and ocean-blue palette; original illustrated SVG Earth; responsive desktop/mobile layout.
 - 8 curated eras, 3 life scenarios per era (24 total), including extinct animals, living animals, plants, marine sessile organisms and human roles.
@@ -36,4 +56,4 @@ Run `node --test tests.mjs` for catalog, sampling and stat-boundary coverage. `n
 - Uses Direct Upload with the existing authorized Wrangler login. Install Wrangler from the official npm registry if needed, then run `npm run deploy`. No build step or runtime secrets are required. This is a manual deployment; pushing GitHub does not automatically redeploy.
 - Validate with `npm test` and `npm run check`. Preview using `npm run dev`.
 - Original source: `earthlife-source.zip` (source commit `ffeed6d06f8730b4849f9418e5dd4c3adc203bad`). The obsolete Sites hosting metadata was removed; game content and mechanics were preserved.
-- The result screen invites optional exploration of K's Hunting Log and Neo Babylon. Both open HTTPS URLs in a new tab, without redirects or additional tracking.
+- The result screen includes optional invitations to explore further. These open HTTPS URLs in a new tab, without redirects or additional tracking.
