@@ -32,6 +32,7 @@ Run `node --test tests.mjs` for catalog, sampling and stat-boundary coverage. `n
 - Private source repository: https://github.com/mkhsu2002/otherlife
 - Production URL: https://otherlife.icareu.tw/
 - Cloudflare Pages project: `otherlife`, production branch: `main`, static output: `dist/`.
+- Deploy to the verified account by setting `CLOUDFLARE_ACCOUNT_ID=82af99e90d342a30d2386efaa8ef4966` for the deployment command; no global account defaults are changed.
 - Uses Direct Upload with the existing authorized Wrangler login. Install Wrangler from the official npm registry if needed, then run `npm run deploy`. No build step or runtime secrets are required. This is a manual deployment; pushing GitHub does not automatically redeploy.
 - Validate with `npm test` and `npm run check`. Preview using `npm run dev`.
 - Original source: `earthlife-source.zip` (source commit `ffeed6d06f8730b4849f9418e5dd4c3adc203bad`). The obsolete Sites hosting metadata was removed; game content and mechanics were preserved.
