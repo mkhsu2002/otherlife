@@ -49,7 +49,7 @@ This first version covers a curated catalog, not every species, place or histori
 Run `node --test tests.mjs` for catalog, sampling and stat-boundary coverage. `node --check dist/app.js` checks application syntax.
 
 ## Cloudflare deployment
-- Private source repository: https://github.com/mkhsu2002/otherlife
+- Public source repository: https://github.com/mkhsu2002/otherlife
 - Production URL: https://otherlife.icareu.tw/
 - Cloudflare Pages project: `otherlife`, production branch: `main`, static output: `dist/`.
 - Deploy to the verified account by setting `CLOUDFLARE_ACCOUNT_ID=82af99e90d342a30d2386efaa8ef4966` for the deployment command; no global account defaults are changed.
