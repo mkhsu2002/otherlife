@@ -1,6 +1,6 @@
 # 地球轉生所 / Earthlife Atlas
 
-An original, buildless Traditional Chinese browser game. Open the deployed Site, or serve `dist/` with any static HTTP server (`python -m http.server --directory dist 8765`). No build step, backend, paid API, or user account inside the game.
+An original, buildless Traditional Chinese / English browser game. Open the deployed Site, or serve `dist/` with any static HTTP server (`python -m http.server --directory dist 8765`). No build step, backend, paid API, or user account inside the game.
 
 ## 致謝與靈感
 
@@ -36,6 +36,7 @@ The observed 1in8b.life/zh experience uses a weighted birth draw, birth-certific
 
 ## Files
 - `dist/data.js`: era catalog, event sets and pure random/stat functions.
+- `dist/i18n.js`: complete English display translations; language changes preserve the current game and canonical saved data.
 - `dist/app.js`: rendering, navigation, chapter state, outcomes and local persistence.
 - `dist/style.css`: responsive styling and reduced-motion support.
 - `dist/index.html`, `dist/icon.svg`: entry point and original icon.
@@ -57,3 +58,13 @@ Run `node --test tests.mjs` for catalog, sampling and stat-boundary coverage. `n
 - Validate with `npm test` and `npm run check`. Preview using `npm run dev`.
 - Original source: `earthlife-source.zip` (source commit `ffeed6d06f8730b4849f9418e5dd4c3adc203bad`). The obsolete Sites hosting metadata was removed; game content and mechanics were preserved.
 - The result screen includes optional invitations to explore further. These open HTTPS URLs in a new tab, without redirects or additional tracking.
+
+## Language and local storage
+The header switches between 繁體中文 and English. Traditional Chinese is the default. The choice is remembered in localStorage as `earthlife-language` when storage is available. Switching languages preserves the current life, chapter, stats, pending choice, paused journey, era filters and completed collection; it does not reroll or reset a life.
+
+Completed lives stay under the existing `earthlife-v1` key (latest 100 journeys). The current unfinished journey remains in memory only and is lost on reload or close. There are no accounts or server-side saves.
+
+## License
+Copyright © 2026 M.K. This repository’s original code and assets are released under the [MIT License](LICENSE), allowing free use, modification and redistribution under its terms. Author: [M.K. Bio](https://mkhsu.icareu.tw/).
+
+This license applies to this repository only. The acknowledgement of [1in8b.life](https://1in8b.life/zh/) describes creative inspiration; it does not claim that the reference website is open source or grant permission to use its code, artwork, text or data. External resources and fonts retain their respective licenses.
