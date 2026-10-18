@@ -1,0 +1,7 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "otherlife",
+  "account_id": "82af99e90d342a30d2386efaa8ef4966",
+  "pages_build_output_dir": "./dist",
+  "compatibility_date": "2026-10-18"
+}

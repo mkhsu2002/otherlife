@@ -1,0 +1,12 @@
+{
+  "name": "otherlife",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests.mjs ui-state-tests.mjs",
+    "check": "node --check dist/app.js && node --check dist/data.js",
+    "dev": "python3 -m http.server --directory dist 8765",
+    "deploy": "wrangler pages deploy dist --project-name otherlife --branch main"
+  }
+}
