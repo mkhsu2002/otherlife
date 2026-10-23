@@ -1,6 +1,6 @@
 # Version 2 發布驗證
 
-狀態：2026-10-23 實作完成，等待本輪 GitHub main 與正式部署驗證。不得以本頁取代正式結果。
+狀態：2026-10-23 已完成 GitHub、Cloudflare API 與正式公開行為交叉驗證。此為本輪證據快照，未承諾外部社群逐平台發文結果。
 
 ## 來源與平台
 - 唯一開發 repo：mkhsu2002/otherlife；正式分支 main；輸出 dist/。
@@ -26,7 +26,20 @@
 - 所有 12 個非 HTML 可服務資產逐位元一致；HTML 額外注入既有 Cloudflare traffic beacon。公開隱私說明已補充基本流量統計，將以移除已識別單一 beacon 後的 HTML 及 metadata 比對作為驗證。
 - Zone 把靜態資產 max-age 設為 14400 秒，因此入口、樣式與所有模組 import 加上 ?v=2，避免新入口載入舊快取。
 
-## 待完成
-- 對準最終 GitHub main commit 的 Cloudflare production deployment 成功。
-- 無憑證公開讀回首頁、全部靜態模組與 OG 圖，核對檔案雜湊。
-- 正式結果／挑戰網址在瀏覽器重播與開始遊玩；正式 console 無錯誤。
+## 正式發布驗證結果
+- Runtime commit：`1ba7acacd76ebb0435149165cfc080357787dc7f`，已在 GitHub main。
+- GitHub Game quality：run `40015282465`，success；本機 24 tests 與所有執行模組語法通過。
+- Cloudflare canonical production deployment：`243e4774-0ec8-4bec-8693-2c1e56a81fe5`，success，`commit_dirty=false`，branch main，commit hash 與上列一致。
+- Production alias：https://otherlife.icareu.tw/；deployment：https://243e4774.otherlife.pages.dev/。
+- 無 Cookie、無 Authorization 的公開 HTTP readback：12 個非 HTML 可服務資產全部 SHA-256 與本機一致。HTML 除既有單一 Cloudflare traffic beacon 與其換行外一致；canonical、OG 圖與版本化入口已核對。沒有更動既有流量統計設定。
+- 正式瀏覽器依次載入 app/data/i18n/engine/storage/knowledge/stories/share/ui-copy 的 `?v=2` 模組。
+- 正式範例結果：`/#r=2.modern-1.42.0101.zh-Hant`，唯讀重播 67/57/74，首次訪客不寫入圖鑑。
+- 正式範例挑戰：`/#c=2.modern-1.42.en`，可直接開始、完成四章並重現 67/57/74；兩語可切換。
+- 正式 PNG 實際解碼：1080×1350 與 1080×1920。390px viewport 無水平溢出；正式 console error=0。
+- 上述驗證後的文件提交僅更新 docs，不改 dist；依最小觸發原則不再部署或重跑完整 CI。GitHub main 的文件後續 commit 與 runtime commit 不同，但正式輸出保持一致。
+
+## 保留界線
+- 其餘 18 種生命仍可玩通用事件，專屬事件與逐物種查核列入 P2；詳見 content-audit.md。
+- 共用 OG 預覽圖已部署；個別結果的動態社群 OG 圖未實作，不冒稱已支援。
+- 分享連結可手工編輯，不是防作弊成績；今日模式使用裝置時間換算溫哥華日期。
+- 系統分享與外部社群送出由玩家操作。已測試取消／不支援／剪貼簿拒絕退路，未替玩家完成外部發文。
