@@ -24,4 +24,7 @@
 
 ## 正式回讀
 
-待本輪部署後補上GitHub commit、Cloudflare deployment、公開資產比對與實際操作結果。
+- GitHub main程式提交：`fb36e53ae0c5acafcfb458f74c73c95aa672a862`，Game quality run `40025557992` success。
+- 部署尚未完成：Wrangler回報既有OAuth到期且refresh失敗，未建立新production deployment。
+- 已盤點安全儲存並找到既有Cloudflare Keychain項目；讀取目前等待macOS系統授權，未顯示、複製或重設任何金鑰。
+- 正式站仍為前次成功部署；須在系統授權完成後從GitHub main發布，再補Cloudflare deployment、公開資產與實際操作結果。
