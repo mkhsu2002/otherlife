@@ -1,6 +1,6 @@
 # 正式宣傳前發布驗證
 
-狀態：本輪完成實作、來源查核、單一模型整理與本機測試，等待正式發布回讀。
+狀態：2026-10-23完成正式發布與公開回讀。
 
 ## 範圍
 
@@ -26,7 +26,12 @@
 
 ## 正式回讀
 
-- GitHub main程式提交：`fb36e53ae0c5acafcfb458f74c73c95aa672a862`，Game quality run `40025557992` success。
-- 部署尚未完成：Wrangler回報既有OAuth到期且refresh失敗，未建立新production deployment。
-- 已盤點安全儲存並找到既有Cloudflare Keychain項目；讀取目前等待macOS系統授權，未顯示、複製或重設任何金鑰。
-- 正式站仍為前次成功部署；須在系統授權完成後從GitHub main發布，再補Cloudflare deployment、公開資產與實際操作結果。
+- GitHub main程式提交：`2ba19c69d43e38381d5777bad97bf383085bbf01`，Game quality run `40034466086` success。
+- 2026-10-23使用Keychain既有憑證完成production發布，未新增或輪換金鑰。
+- Cloudflare部署：`dc1d42f4-098c-4a96-a6a1-53a9a0d3c646`；部署API讀回production、success、main、上述commit，commit_dirty=false。
+- 正式網址：https://otherlife.icareu.tw/ ；部署網址：https://dc1d42f4.otherlife.pages.dev 。
+- 正式網域app、share、share-qr、stories-all、music、vendor QR、WebP插畫與social.png內容與本機逐位元一致。
+- `/index.html`受平台直接存取限制；瀏覽器從公開根路徑取得200並確認sharecard資產版本與OG圖片網址，未以直接路徑403誤判發布失敗。
+- canonical codex-flypig-ai瀏覽器開啟實際結果連結，讀到紅樹、正確四章選擇、67/57/74數值與潮間的綠蔭結局；目錄24種。
+- 正式網站成功載入插畫並產生1080×1350 PNG（1,242,305 bytes）；點擊「用相同起點遊玩」正確進入紅樹起點，可繼續遊玩。
+- 分享圖片原尺寸與50%尺寸的獨立QR解碼證據見本機證據；未代替玩家送出任何社群貼文。
