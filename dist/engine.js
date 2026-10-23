@@ -1,5 +1,5 @@
-import { eras, resolveStats, chooseLife } from "./data.js?rev=launch";
-import { allStories, profiles } from "./stories-all.js?rev=launch";
+import { eras, resolveStats, chooseLife } from "./data.js?rev=sharecard";
+import { allStories, profiles } from "./stories-all.js?rev=sharecard";
 export const lifeKeys = Object.keys(allStories);
 export function seeded(seed) {
   let n = seed >>> 0;

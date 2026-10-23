@@ -1,5 +1,6 @@
-import { lifeFor, encodeRun } from "./engine.js?rev=launch";
-import { translateText } from "./i18n.js?rev=launch";
+import { drawShareQR } from "./share-qr.js?rev=sharecard";
+import { lifeFor, encodeRun } from "./engine.js?rev=sharecard";
+import { translateText } from "./i18n.js?rev=sharecard";
 export function shareURL(run, language, kind = "r") {
   return new URL(
     "/" + encodeRun(run, kind, language),
@@ -44,75 +45,208 @@ export function wrapLines(context, text, maxWidth) {
   if (line) lines.push(line);
   return lines;
 }
+let artPromise;
+export function loadShareArt() {
+  if (!artPromise)
+    artPromise = new Promise((resolve, reject) => {
+      const image = new Image();
+      const timer = setTimeout(() => reject(Error("Artwork timed out")), 8000);
+      image.onload = () => {
+        clearTimeout(timer);
+        resolve(image);
+      };
+      image.onerror = () => {
+        clearTimeout(timer);
+        reject(Error("Artwork unavailable"));
+      };
+      image.src = new URL(
+        "./assets/earthlife-share.webp",
+        import.meta.url,
+      ).href;
+    }).catch((error) => {
+      artPromise = null;
+      throw error;
+    });
+  return artPromise;
+}
+function heroArt(c, image, x, y, w, h) {
+  c.save();
+  c.beginPath();
+  c.roundRect(x, y, w, h, 28);
+  c.clip();
+  if (image) {
+    const scale = Math.max(w / image.naturalWidth, h / image.naturalHeight),
+      width = image.naturalWidth * scale,
+      height = image.naturalHeight * scale;
+    c.drawImage(
+      image,
+      x + (w - width) / 2,
+      y + (h - height) / 2,
+      width,
+      height,
+    );
+  } else {
+    c.fillStyle = "#dce9dd";
+    c.fillRect(x, y, w, h);
+    c.fillStyle = "#84bfc2";
+    c.beginPath();
+    c.arc(x + w / 2, y + h / 2, h * 0.39, 0, Math.PI * 2);
+    c.fill();
+    c.fillStyle = "#bdcf8f";
+    c.beginPath();
+    c.ellipse(
+      x + w * 0.47,
+      y + h * 0.4,
+      w * 0.13,
+      h * 0.17,
+      -0.3,
+      0,
+      Math.PI * 2,
+    );
+    c.fill();
+    c.beginPath();
+    c.ellipse(
+      x + w * 0.55,
+      y + h * 0.65,
+      w * 0.07,
+      h * 0.18,
+      0.4,
+      0,
+      Math.PI * 2,
+    );
+    c.fill();
+  }
+  c.restore();
+}
 export async function resultImage(run, result, language, portrait = false) {
-  if (document.fonts?.ready) await document.fonts.ready;
-  const canvas = document.createElement("canvas");
+  if (document.fonts?.ready)
+    await Promise.race([
+      document.fonts.ready,
+      new Promise((resolve) => setTimeout(resolve, 1200)),
+    ]);
+  const art = await loadShareArt().catch(() => null),
+    canvas = document.createElement("canvas");
   canvas.width = 1080;
   canvas.height = portrait ? 1920 : 1350;
   const c = canvas.getContext("2d");
   if (!c) throw Error("Canvas unavailable");
   const t = (s) => translateText(s, language),
-    l = lifeFor(run.key);
+    life = lifeFor(run.key),
+    height = canvas.height;
   c.fillStyle = "#f5f6ef";
-  c.fillRect(0, 0, 1080, canvas.height);
-  c.fillStyle = l.era.color;
+  c.fillRect(0, 0, 1080, height);
+  const heroHeight = portrait ? 760 : 440;
+  heroArt(c, art, 40, 40, 1000, heroHeight);
+  c.fillStyle = "#fffef1e8";
   c.beginPath();
-  c.arc(890, 210, 340, 0, Math.PI * 2);
+  c.roundRect(64, 62, 370, 54, 20);
   c.fill();
   c.fillStyle = "#264c43";
-  c.font = "500 30px system-ui";
-  c.fillText("EARTHLIFE ATLAS", 80, 110);
-  let y = portrait ? 340 : 250;
-  const draw = (text, font, color = "#264c43", gap = 65) => {
-    c.font = font;
-    c.fillStyle = color;
-    for (const line of wrapLines(c, text, 920)) {
-      c.fillText(line, 80, y);
-      y += gap;
-    }
-    y += 25;
+  c.font = "500 25px system-ui";
+  c.fillText("EARTHLIFE ATLAS", 86, 98);
+  const fit = (text, base, min, width = 936) => {
+    let size = base;
+    do {
+      c.font = `bold ${size}px system-ui`;
+      if (c.measureText(text).width <= width) break;
+      size--;
+    } while (size > min);
+    return size;
   };
-  draw(t(l.species[0]), "bold 72px system-ui");
-  draw(
-    t(l.era.name) + " · " + t(l.species[3]),
-    "32px system-ui",
-    "#527168",
-    48,
-  );
-  draw(t(result.title), "bold 44px system-ui", "#264c43", 58);
-  draw(
-    language === "en" ? "The traces I left behind" : "我留下的足跡",
-    "28px system-ui",
-    "#527168",
-    40,
-  );
-  result.log.forEach((row, i) =>
-    draw(`${i + 1}. ${t(row.text)}`, "30px system-ui", "#264c43", 42),
-  );
-  draw(
-    result.stats
-      .map((n, i) => `${t(["活力", "連結", "探索"][i])} ${n}`)
-      .join("   "),
-    "27px system-ui",
-    "#527168",
-    40,
-  );
+  let y = 40 + heroHeight + 80;
+  const name = t(life.species[0]);
+  fit(name, 64, 40);
+  c.fillText(name, 72, y);
+  y += 52;
+  c.font = "26px system-ui";
+  c.fillStyle = "#527168";
+  const meta = wrapLines(
+    c,
+    t(life.era.name) + " · " + t(life.species[3]),
+    936,
+  ).slice(0, 2);
+  for (const line of meta) {
+    c.fillText(line, 74, y);
+    y += 34;
+  }
+  y += 26;
+  const title = t(result.title);
+  fit(title, 40, 26);
   c.fillStyle = "#264c43";
-  c.font = "bold 30px system-ui";
+  c.fillText(title, 72, y);
+  y += 74;
+  const labels = ["活力", "連結", "探索"];
+  result.stats.forEach((value, i) => {
+    const x = 74 + i * 316;
+    c.font = "24px system-ui";
+    c.fillStyle = "#527168";
+    c.fillText(t(labels[i]), x, y);
+    c.font = "bold 32px system-ui";
+    c.fillStyle = "#264c43";
+    c.fillText(String(value), x, y + 43);
+    c.fillStyle = "#dae5d5";
+    c.fillRect(x, y + 59, 250, 7);
+    c.fillStyle = ["#86a880", "#c4a169", "#7faab4"][i];
+    c.fillRect(x, y + 59, (250 * value) / 100, 7);
+  });
+  y += 120;
+  c.font = "24px system-ui";
+  c.fillStyle = "#527168";
+  c.fillText(
+    language === "en" ? "Traces of this life" : "這一生留下的足跡",
+    74,
+    y,
+  );
+  y += 43;
+  const traces = portrait ? result.log : result.log.slice(-1);
+  for (const [i, row] of traces.entries()) {
+    c.font = "27px system-ui";
+    c.fillStyle = "#264c43";
+    const prefix = portrait ? `${i + 1}. ` : "";
+    for (const line of wrapLines(c, prefix + t(row.text), 936).slice(0, 2)) {
+      c.fillText(line, 74, y);
+      y += 34;
+    }
+    y += 12;
+  }
+  const footerY = height - 294;
+  c.fillStyle = "#e7eee1";
+  c.beginPath();
+  c.roundRect(40, footerY, 1000, 250, 24);
+  c.fill();
+  drawShareQR(c, shareURL(run, language), 776, footerY + 5, 240);
+  c.fillStyle = "#264c43";
+  c.font = "bold 33px system-ui";
   c.fillText(
     language === "en" ? "Who will you become?" : "下一次，你會成為誰？",
-    80,
-    canvas.height - 145,
+    72,
+    footerY + 64,
   );
-  c.font = "26px system-ui";
-  c.fillText("otherlife.icareu.tw", 80, canvas.height - 95);
-  c.font = "20px system-ui";
+  c.font = "25px system-ui";
+  c.fillStyle = "#527168";
+  c.fillText(
+    language === "en" ? "Scan to see this story" : "掃碼看看這段故事",
+    74,
+    footerY + 118,
+  );
+  c.fillText(
+    language === "en"
+      ? "Then begin your own journey"
+      : "再從同一起點，走出你的一生",
+    74,
+    footerY + 155,
+  );
+  c.font = "24px system-ui";
+  c.fillStyle = "#264c43";
+  c.fillText("otherlife.icareu.tw", 74, footerY + 211);
+  c.font = "18px system-ui";
+  c.fillStyle = "#71806b";
   c.fillText(
     language === "en"
       ? "An imagined journey. Stats are narrative indicators."
       : "一場想像旅程，數值為敘事指標。",
-    80,
-    canvas.height - 52,
+    74,
+    height - 18,
   );
   return new Promise((resolve, reject) =>
     canvas.toBlob(

@@ -1,6 +1,6 @@
-import { catalog as eras } from "./engine.js?rev=launch";
-import { installMusicControls } from "./music.js?rev=launch";
-import { translateText, translateMarkup } from "./i18n.js?rev=launch";
+import { catalog as eras } from "./engine.js?rev=sharecard";
+import { installMusicControls } from "./music.js?rev=sharecard";
+import { translateText, translateMarkup } from "./i18n.js?rev=sharecard";
 import {
   lifeFor,
   replay,
@@ -10,22 +10,22 @@ import {
   parseRun,
   dailyRun,
   freshRun,
-} from "./engine.js?rev=launch";
+} from "./engine.js?rev=sharecard";
 import {
   STORAGE_KEY,
   normalizeState,
   addRecord,
   importState,
   activeOK,
-} from "./storage.js?rev=launch";
-import { knowledgeFor } from "./knowledge.js?rev=launch";
+} from "./storage.js?rev=sharecard";
+import { knowledgeFor } from "./knowledge.js?rev=sharecard";
 import {
   shareURL,
   shareText,
   socialLinks,
   resultImage,
   downloadBlob,
-} from "./share.js?rev=launch";
+} from "./share.js?rev=sharecard";
 const $ = (s) => document.querySelector(s);
 let records = [],
   saveOK = true,

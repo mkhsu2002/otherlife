@@ -1,4 +1,4 @@
-import { allStories, newSources } from "./stories-all.js?rev=launch";
+import { allStories, newSources } from "./stories-all.js?rev=sharecard";
 const baseSources = {
   "cambrian-2": {
     name: "Smithsonian",

@@ -1,4 +1,4 @@
-import { lifeFor, validRun } from "./engine.js?rev=launch";
+import { lifeFor, validRun } from "./engine.js?rev=sharecard";
 export const STORAGE_KEY = "earthlife-save";
 const recordOK = (r) =>
   r &&

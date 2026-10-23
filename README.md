@@ -33,7 +33,7 @@ AI 大幅降低了把想法做出來的門檻。但能做出來之後，更重�
 - 結果分享例：https://otherlife.icareu.tw/#r=carboniferous-1.42.0101.zh-Hant
 - 同籤挑戰例：https://otherlife.icareu.tw/#c=carboniferous-1.42.zh-Hant
 - 分享結果唯讀，不會自動加入朋友的圖鑑；對方可從同一起點遊玩。分享參數只含生命ID、種子、選擇與語言，沒有個人資料或整本圖鑑。
-- 系統分享、LINE／Facebook／X入口與PNG貼文／限動卡；Instagram／Threads可使用下載圖片或系統分享。玩家自行最終送出，不自動發文。共用OG圖，不宣稱每個結果有不同社群預覽。
+- 系統分享、LINE／Facebook／X入口與PNG貼文／限動卡；Instagram／Threads可使用下載圖片或系統分享。玩家自行最終送出，不自動發文。貼文／限動卡包含地球插畫與連往該次結果的QR code；共用OG圖包含首頁QR，不宣稱每個結果有不同社群預覽。
 
 ## 輕音樂
 
@@ -58,13 +58,14 @@ AI 大幅降低了把想法做出來的門檻。但能做出來之後，更重�
 - `dist/engine.js`：唯一遊戲規則、種子、分支、結果重播與分享參數驗證。
 - `dist/knowledge.js`：來源與證據範圍。
 - `dist/storage.js`：本機資料、備份驗證與永久解鎖。
+- `dist/share-qr.js`、`dist/vendor/qrcode.mjs`：本機產生可掃描QR，無第三方QR服務；`npm run vendor:qr`由鎖定套件重建供應檔。
 - `dist/share.js`：分享入口、可複製文字、1080×1350／1080×1920圖片。
 - `dist/music.js`：原創曲譜、聲音生命週期與無障礙音樂控制。
 - `dist/app.js`、`i18n.js`、`ui-copy.js`、`style.css`、`index.html`：介面與語系。
 
 ## 開發、驗證與部署
 
-不需安裝依賴或建置。`npm run dev`開啟本機預覽；`npm test`驗證所有生命、分享參數、儲存、雙語與音樂；`npm run check`檢查執行模組語法。
+正式網站不需建置或外部服務。開發測試先執行`npm ci`安裝QR解碼測試依賴；瀏覽器使用已納入版本控制的本機QR模組。`npm run dev`開啟本機預覽；`npm test`驗證所有生命、分享參數、儲存、雙語與音樂；`npm run check`檢查執行模組語法。
 
 Cloudflare Pages專案`otherlife`，正式分支`main`，輸出`dist/`，帳號ID `82af99e90d342a30d2386efaa8ef4966`。平台是Direct Upload，GitHub推送不會自動部署；所有開發先同步repo，再從乾淨的main提交發布：
 
@@ -72,10 +73,12 @@ Cloudflare Pages專案`otherlife`，正式分支`main`，輸出`dist/`，帳號I
 CLOUDFLARE_ACCOUNT_ID=82af99e90d342a30d2386efaa8ef4966 npx wrangler pages deploy dist --project-name otherlife --branch main
 ```
 
-使用安全儲存中的Wrangler授權，沒有repo／runtime secret。完成須核對GitHub、Cloudflare部署commit、公開資產及遊戲／分享／音樂行為。[發布驗證](docs/release-verification.md)記錄本次結果。主機對資產有快取，入口與模組的`?rev=launch`只用於部署快取識別，不是多套遊戲規則。
+使用安全儲存中的Wrangler授權，沒有repo／runtime secret。完成須核對GitHub、Cloudflare部署commit、公開資產及遊戲／分享／音樂行為。[發布驗證](docs/release-verification.md)記錄本次結果。主機對資產有快取，入口與模組的`?rev=sharecard`只用於部署快取識別，不是多套遊戲規則。
 
 GitHub品質檢查只在遊戲來源、測試、套件／部署設定或workflow變更時觸發；docs-only不啟動完整CI或部署，沒有排程空跑。
 
 ## License
 
 Copyright © 2026 M.K. 本repo原創程式、圖像與音樂採[MIT License](LICENSE)。作者：[M.K. Bio](https://mkhsu.icareu.tw/)。參考作品的致謝不代表取得其程式、美術或資料授權；外部資源保有各自權利。
+
+第三方QR產生器qrcode-generator 2.0.4採MIT，授權見`dist/vendor/LICENSE.qrcode.txt`；jsQR 1.4.0採Apache-2.0，僅用於開發測試，不送至玩家瀏覽器。分享插畫是概念性地球意象，非特定年代的地理重建。

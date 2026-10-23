@@ -5,9 +5,14 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "test": "node --test tests.mjs advanced-tests.mjs full-catalog-tests.mjs music-tests.mjs ui-state-tests.mjs",
-    "check": "node --check dist/app.js && node --check dist/engine.js && node --check dist/stories-all.js && node --check dist/stories-early.js && node --check dist/stories-middle.js && node --check dist/stories-recent.js && node --check dist/story-kit.js && node --check dist/music.js && node --check dist/i18n.js && node --check dist/knowledge.js && node --check dist/share.js && node --check dist/storage.js",
+    "test": "node --test tests.mjs advanced-tests.mjs full-catalog-tests.mjs music-tests.mjs ui-state-tests.mjs share-card-tests.mjs",
+    "check": "node --check dist/app.js && node --check dist/engine.js && node --check dist/stories-all.js && node --check dist/stories-early.js && node --check dist/stories-middle.js && node --check dist/stories-recent.js && node --check dist/story-kit.js && node --check dist/music.js && node --check dist/i18n.js && node --check dist/knowledge.js && node --check dist/share.js && node --check dist/storage.js && node --check dist/share-qr.js",
     "dev": "python3 -m http.server --directory dist 8765",
-    "deploy": "wrangler pages deploy dist --project-name otherlife --branch main"
+    "deploy": "wrangler pages deploy dist --project-name otherlife --branch main",
+    "vendor:qr": "node scripts/vendor-qr.mjs"
+  },
+  "devDependencies": {
+    "jsqr": "1.4.0",
+    "qrcode-generator": "2.0.4"
   }
 }

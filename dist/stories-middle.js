@@ -1,4 +1,4 @@
-import { createStoryKit } from "./story-kit.js?rev=launch";
+import { createStoryKit } from "./story-kit.js?rev=sharecard";
 export const translations = {};
 const { p, makeStory } = createStoryKit(translations);
 export const stories = {
