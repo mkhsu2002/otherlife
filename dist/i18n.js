@@ -1,3 +1,5 @@
+import {storyEnglish} from './stories.js';
+import {uiEnglish} from './ui-copy.js';
 // Display-only translations: canonical game data, saved keys and mechanics stay unchanged.
 export const english = {
   '地球轉生所':'Earthlife Atlas',
@@ -64,7 +66,6 @@ export const english = {
   '每一次重生，都是一種觀看地球的新方式。':'Every new life offers another way to see Earth.',
   '種生命已留下足跡':'life forms discovered', '段旅程已收藏':'journeys saved',
   '瀏覽年代':'Browse by era', '所有年代':'All eras', '完成一生，即可點亮圖鑑':'Complete a life to reveal it in your atlas',
-  '圖鑑保存在目前瀏覽器，不會上傳。換裝置或清除瀏覽器資料後不會保留。最多保留最近 100 段旅程。':'Your atlas is stored in this browser and is never uploaded. It does not transfer to other devices and is removed when you clear site data. The latest 100 journeys are kept.',
   '此瀏覽器目前無法持久儲存。':'Persistent storage is currently unavailable in this browser.',
   '已探索':'Discovered', '等待相遇':'Yet to meet', '旅程已收藏':'Journey saved', '一個還沒開始的故事':'A story waiting to begin',
   '把視角放小，':'Look a little closer.', '把世界看大。':'See a bigger world.',
@@ -73,16 +74,12 @@ export const english = {
   '選擇任意年代或全時代隨機，揭開生命籤，完成四個篇章、各做一個選擇，再把故事收進圖鑑。活力代表當下的資源與狀態；連結代表與環境、其他生命的關聯；探索代表走向未知的經驗。它們是敘事指標，不是生物學測量，也沒有總分排行。':'Choose an era, or let Earth decide. Discover your life, make one choice in each of four chapters, and save your story in the atlas. Vitality describes your current resources and condition; connection reflects relationships with your surroundings and other lives; exploration represents encounters with the unknown. These are narrative indicators, not biological measurements. There is no overall score or leaderboard.',
   '隨機，不等於真實機率':'Random does not mean real-world probability',
   '本版精選 8 個年代，每個年代有 3 種生命情境，共 24 種。全時代模式先等機率選年代，再等機率選該年代的情境（每種約 1/24）；指定年代時，每種為 1/3。這是為了探索多樣性設計的抽籤，不是地球史上所有生命的抽樣，也不是實際出生機率。':'This version features 8 curated eras, with 3 life scenarios each: 24 in total. Any-era mode draws an era uniformly, then a scenario uniformly within it (about 1/24 per scenario). Within a selected era, each scenario has a 1/3 chance. These weights encourage exploration of diversity; they do not sample all life in Earth’s history or represent real birth probabilities.',
-  '每個選擇會套用按鈕列出的數值變化，各指標再獨立加入 −4 到 +4 的整數隨機波動，最後限制在 0–100。數值不會造成提前死亡；四章結束後，最高指標決定結語，平手依活力、連結、探索排序。':'Each choice applies the changes shown on its button, then independently adds a random integer from −4 to +4 to each stat. Values are clamped to 0–100. Stats do not cause an early death. After four chapters, the highest stat determines the closing title; ties are resolved in the order vitality, connection, exploration.',
   '地球的歷史，比遊戲更複雜':'Earth’s history is more complex than a game',
   '年代、生命類群與棲地採大方向相符的配對；部分名稱是較大的類群，故事、職業與行為選項為簡化的虛構情境。「今天的某地附近」是現代地理參照，不代表古代海岸線。遊戲不模擬精確古地理、演化、族群規模或生態機制。':'Eras, groups of organisms and habitats are broadly matched. Some names describe larger groups, while stories, occupations and choices are simplified fictional scenarios. “Near present-day…” is a modern geographic reference, not an ancient coastline. The game does not model precise paleogeography, evolution, population sizes or ecological mechanisms.',
   '想延伸探索：':'Explore further: ', '史密森尼自然史博物館・古生物資源':'Smithsonian National Museum of Natural History · Paleontology resources',
-  '設計筆記：從人生重開，到地球轉生':'Design notes: from a new human life to a new life on Earth',
   '參考網站':'The reference site ',
   '以出生抽籤、出生證明、逐年模擬、事件選項與人生紀錄組成循環。它提供人口／出生數權重、年代模式、暫停與倍速等控制；畫面以身分卡、狀態值、事件紀錄和圖表傳達人生進程。':'builds a loop around a birth draw, a birth certificate, year-by-year simulation, event choices and life records. It offers population/birth weights, era modes, pause and speed controls, using identity cards, stats, event logs and charts to show a life’s progress.',
-  '這裡保留「隨機起點 → 選擇 → 回顧 → 再來一次」的節奏，改成跨物種、跨地質年代的短篇冒險。以連貫的年代與棲地配對取代全球人口抽樣，以四個可讀篇章取代自動年齡計時；清亮的奶油白、鼠尾草綠與海洋藍，搭配原創地球插圖，讓主要操作更容易聚焦。沒有複製原站程式、圖像或資料，也沒有虛構即時玩家數。':'This game keeps the rhythm of “random beginning → choice → reflection → try again” and turns it into short adventures across species and geological eras. Curated era–habitat pairs replace global population sampling, and four readable chapters replace an automatic age timer. Cream, sage and ocean blue surround an original Earth illustration. No code, images or data from the reference site were copied, and no live player counts are fabricated.',
   '關於你的資料':'About your data',
-  '遊戲不要求姓名或電子郵件，進度只儲存在本機瀏覽器的 localStorage。只有完成的生命會收藏；尚未完成的旅程重新整理後會消失。清除網站資料即可刪除圖鑑。':'The game does not ask for your name or email. Completed lives are saved only in your browser’s localStorage. Unfinished journeys disappear on reload. Clear this site’s data to delete your atlas.',
   '語言偏好也會在儲存可用時保留於本機。':' Your language preference is also remembered locally when storage is available.',
   '準備好，去見見世界':'Ready to meet the world',
   '初生':'Beginnings', '轉折':'Turning point', '留下足跡':'A lasting trace',
@@ -215,6 +212,7 @@ for(const [name,description] of Object.entries({
 }))english[`你是${name}。`]=`you are ${description}.`;
 
 // One pass, longest phrases first, prevents shorter labels from changing complete sentences.
+Object.assign(english,storyEnglish,uiEnglish);
 const phrasePattern = new RegExp(Object.keys(english).sort((a,b)=>b.length-a.length).map(s=>s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('|'),'g');
 export function translateText(text,language='zh-Hant') {
   if(language!=='en')return text;
