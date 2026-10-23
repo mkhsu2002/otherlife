@@ -6,7 +6,7 @@ import { shareURL } from "./dist/share.js";
 import * as qr from "./dist/share-qr.js";
 test("QR rendered pixels decode to the exact public result URL for every life and language", () => {
   for (const era of catalog)
-    for (let i = 0; i < 3; i++)
+    for (let i = 0; i < era.species.length; i++)
       for (const language of ["zh-Hant", "en"]) {
         const run = {
             key: era.id + "-" + i,

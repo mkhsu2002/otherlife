@@ -2,15 +2,15 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { eras, chooseLife, resolveStats } from "./dist/data.js";
 import { allStories } from "./dist/stories-all.js";
-test("catalog contains eight unique eras and 24 coherent entries", () => {
+test("catalog contains eight unique eras and 72 coherent entries", () => {
   assert.equal(eras.length, 8);
   assert.equal(new Set(eras.map((e) => e.id)).size, 8);
   assert.equal(
     eras.reduce((n, e) => n + e.species.length, 0),
-    24,
+    72,
   );
   for (const e of eras) {
-    assert.equal(e.species.length, 3);
+    assert.equal(e.species.length, 9);
     for (const s of e.species) {
       assert.equal(s.length, 6);
       assert(s.every((x) => typeof x === "string" && x.length));
@@ -19,8 +19,8 @@ test("catalog contains eight unique eras and 24 coherent entries", () => {
 });
 test("all era and species endpoints reachable", () => {
   for (let ei = 0; ei < 8; ei++)
-    for (let si = 0; si < 3; si++) {
-      let values = [(ei + 0.5) / 8, (si + 0.5) / 3];
+    for (let si = 0; si < 9; si++) {
+      let values = [(ei + 0.5) / 8, (si + 0.5) / 9];
       let life = chooseLife("all", () => values.shift());
       assert.equal(life.era.id, eras[ei].id);
       assert.equal(life.index, si);
@@ -49,9 +49,8 @@ test("10000 simulations preserve stat bounds without mutating previous state", (
     for (let j = 0; j < 4; j++) {
       s = resolveStats(
         s,
-        allStories[Object.keys(allStories)[i % 24]].chapters[j][i % 2][2][
-          i % 2
-        ][2],
+        allStories[Object.keys(allStories)[i % Object.keys(allStories).length]]
+          .chapters[j][i % 2][2][i % 2][2],
       );
       assert(s.every((n) => Number.isInteger(n) && n >= 0 && n <= 100));
     }

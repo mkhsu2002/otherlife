@@ -35,12 +35,12 @@ test("ambient score is slow, bounded and deterministic", () => {
   );
 });
 
-test("all 24 current lives have eight reachable localized events, three endings and scoped sources", async () => {
+test("all 72 current lives have eight reachable localized events, three endings and scoped sources", async () => {
   const { allStories } = await import("./dist/stories-all.js"),
     { sources } = await import("./dist/knowledge.js"),
     { translateText } = await import("./dist/i18n.js");
-  assert.equal(Object.keys(allStories).length, 24);
-  assert.equal(Object.keys(sources).length, 24);
+  assert.equal(Object.keys(allStories).length, 72);
+  assert.equal(Object.keys(sources).length, 72);
   const visit = (value) => {
     if (typeof value === "string")
       assert(!/\p{Script=Han}/u.test(translateText(value, "en")), value);
@@ -81,7 +81,64 @@ test("all 24 current lives have eight reachable localized events, three endings 
     assert.equal(new URL(sources[key].url).protocol, "https:");
     assert(sources[key].scope.length > 5);
     assert(sources[key].checked);
+    assert(!/\p{Script=Han}/u.test(translateText(sources[key].name, "en")), `${key}: source title needs English`);
   }
 });
 
-test('backups reject a pending choice before the first chapter',async()=>{const {activeOK,importState}=await import('./dist/storage.js');const active={run:{key:'modern-0',seed:42,choices:[]},step:-1,pending:true};assert.equal(activeOK(active),false);assert.throws(()=>importState(JSON.stringify({format:'earthlife',records:[],unlocked:[],active})));});
+test("backups reject a pending choice before the first chapter", async () => {
+  const { activeOK, importState } = await import("./dist/storage.js");
+  const active = {
+    run: { key: "modern-0", seed: 42, choices: [] },
+    step: -1,
+    pending: true,
+  };
+  assert.equal(activeOK(active), false);
+  assert.throws(() =>
+    importState(
+      JSON.stringify({
+        format: "earthlife",
+        records: [],
+        unlocked: [],
+        active,
+      }),
+    ),
+  );
+});
+
+test("a complete 72-life atlas round-trips through a backup", async () => {
+  const { importState } = await import("./dist/storage.js");
+  assert.equal(engine.lifeKeys.length, 72);
+  const imported = importState(
+    JSON.stringify({
+      format: "earthlife",
+      records: [],
+      unlocked: engine.lifeKeys,
+      active: null,
+    }),
+  );
+  assert.deepEqual(imported.unlocked, engine.lifeKeys);
+});
+
+test("new life decisions offer a stat tradeoff rather than a dominating option", async () => {
+  const { allStories } = await import("./dist/stories-all.js");
+  const signatures = new Set();
+  let count = 0;
+  for (const [key, story] of Object.entries(allStories)) {
+    if (Number(key.split("-")[1]) < 3) continue;
+    count++;
+    for (const event of story.chapters.flat()) {
+      const [a, b] = event[2].map((choice) => choice[2]);
+      assert(
+        a.some((value, i) => value > b[i]) &&
+          a.some((value, i) => value < b[i]),
+        `${key}: ${event[0]} must offer a real tradeoff`,
+      );
+      signatures.add(JSON.stringify([a, b]));
+    }
+  }
+  assert.equal(count, 48);
+  assert(
+    signatures.size >= 24,
+    "different ecological decisions must use varied effects",
+  );
+});

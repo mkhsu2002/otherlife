@@ -1,10 +1,9 @@
 export const uiEnglish = {
+  "臺北市環保局 · 臺北市涼適點專區": "Taipei Department of Environmental Protection · Cool Places",
   "約 3.26 億至 3 億年前": "About 326–300 million years ago",
   "約 1.99 億至 1.45 億年前": "About 199–145 million years ago",
-  "約 7,200 萬至 6,600 萬年前": "About 72–66 million years ago",
-  "約 3 萬至 2 萬年前": "About 30,000–20,000 years ago",
-  "二十四種生命，各有自己的分支故事。換一個起點，走進另一種世界。":
-    "Twenty-four lives, each with a branching story. A new beginning opens another world.",
+  "約 8,500 萬至 6,600 萬年前": "About 85–66 million years ago",
+  "約 3.6 萬至 1.3 萬年前": "About 36,000–13,000 years ago",
   背景音樂: "Background music",
   音量: "Volume",
   音樂音量: "Music volume",
@@ -85,8 +84,6 @@ export const uiEnglish = {
     "Share one result or invite a friend to the same beginning. The same start and choices reproduce the same result. This is not a real birth probability or scientific prediction.",
   "進度與語言偏好只保存在這個瀏覽器。可匯出備份；清除網站資料會移除存檔。分享是自願的，不會自動發布到社群。":
     "Progress and language preferences stay in this browser. Export a backup to keep them; clearing site data removes saves. Sharing is optional and never posts automatically.",
-  "隨機生命，每種約 1/24；指定年代則每種約 1/3。今日共同起點另以當日固定起點開始。":
-    "Random mode gives each life about 1/24 probability, or 1/3 within a selected era. Today’s shared beginning uses a fixed start for the day.",
   "你的選擇會改變後續篇章與結局；數值是敘事指標，不代表生命價值。":
     "Your choices shape later chapters and endings. Stats are narrative indicators, not measures of a life’s worth.",
   "只會清除這個瀏覽器的遊戲存檔。要繼續嗎？":
@@ -101,4 +98,26 @@ export const uiEnglish = {
     "This setting simplifies a broader group; its behaviour and events are fictional.",
   查閱自然史資源: "Explore natural history resources",
   相同起點挑戰: "Same-beginning challenge",
+  遊玩進度: "Journey progress",
+  揭曉生命: "Meet your life",
+  四章旅程: "Four chapters",
+  查看結局: "Your ending",
+  "準備開始｜接下來有4個篇章": "Ready to begin · Four chapters ahead",
+  開始第1章: "Start chapter 1",
+  "選一個行動，看看接下來會發生什麼。":
+    "Choose an action to see what happens next.",
+  "已完成選擇，閱讀結果後繼續。":
+    "Choice made. Read what happened, then continue.",
+  查看我的結局: "See my ending",
+  "種生命，各有自己的分支故事。換一個起點，走進另一種世界。":
+    " lives, each with a branching story. Choose a new beginning and enter another world.",
+  "隨機生命，每種約": "In random mode, each life has about",
+  "；指定年代則每種約": " probability; within one era, about",
+  "。今日共同起點另以當日固定起點開始。":
+    ". Today’s shared beginning uses a fixed start for the day.",
 };
+
+for (let chapter = 1; chapter <= 4; chapter++) {
+  uiEnglish[`第${chapter}章／共4章`] = `Chapter ${chapter} of 4`;
+  uiEnglish[`前往第${chapter}章`] = `Continue to chapter ${chapter}`;
+}

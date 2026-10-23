@@ -350,3 +350,50 @@ test("pending route and music language changes preserve the current journey", ()
   assert.equal(a.node("#musicToggle").textContent, "Music: off");
   assert.equal(a.run("JSON.stringify({run,log,stats})"), old);
 });
+
+test("journey explains preparation, choice, numbered next chapter and final result in both languages", () => {
+  for (const language of ["zh-Hant", "en"]) {
+    const a = app();
+    a.run(`language='${language}';start('modern')`);
+    assert(
+      a
+        .node("#app")
+        .innerHTML.includes(
+          language === "en" ? "Start chapter 1" : "開始第1章",
+        ),
+    );
+    a.node("#enter").onclick();
+    for (let chapter = 0; chapter < 4; chapter++) {
+      const html = a.node("#app").innerHTML;
+      assert(
+        html.includes(
+          language === "en"
+            ? `Chapter ${chapter + 1} of 4`
+            : `第${chapter + 1}章／共4章`,
+        ),
+      );
+      a.run("makeChoice(0)");
+      assert(
+        a
+          .node("#aftermath")
+          .innerHTML.includes(
+            language === "en"
+              ? chapter === 3
+                ? "See my ending"
+                : `Continue to chapter ${chapter + 2}`
+              : chapter === 3
+                ? "查看我的結局"
+                : `前往第${chapter + 2}章`,
+          ),
+      );
+      a.node("#continue").onclick();
+    }
+    assert.equal(a.run("records.length"), 1);
+  }
+});
+
+test("the journey log immediately reflects a committed choice before continuing", () => {
+  const a = app();
+  a.run("start('modern');step=0;renderLife();makeChoice(0)");
+  assert(a.node(".life-log").innerHTML.includes("1 / 4"));
+});

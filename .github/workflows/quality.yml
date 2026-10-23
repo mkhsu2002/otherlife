@@ -2,9 +2,9 @@ name: Game quality
 on:
   push:
     branches: [main]
-    paths: ['dist/**', '*tests.mjs', 'package.json', 'package-lock.json', 'scripts/vendor-qr.mjs', 'wrangler.jsonc', '.github/workflows/quality.yml']
+    paths: ['dist/**', '*tests.mjs', 'package.json', 'package-lock.json', 'scripts/**', 'wrangler.jsonc', '.github/workflows/quality.yml']
   pull_request:
-    paths: ['dist/**', '*tests.mjs', 'package.json', 'package-lock.json', 'scripts/vendor-qr.mjs', 'wrangler.jsonc', '.github/workflows/quality.yml']
+    paths: ['dist/**', '*tests.mjs', 'package.json', 'package-lock.json', 'scripts/**', 'wrangler.jsonc', '.github/workflows/quality.yml']
 permissions:
   contents: read
 concurrency:

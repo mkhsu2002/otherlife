@@ -1,12 +1,13 @@
-import { allStoryEnglish as storyEnglish } from "./stories-all.js?rev=sharecard";
-import { uiEnglish } from "./ui-copy.js?rev=sharecard";
+import { eras as lifeCatalog } from "./data.js?rev=otherlife72";
+import { allStoryEnglish as storyEnglish } from "./stories-all.js?rev=otherlife72";
+import { uiEnglish } from "./ui-copy.js?rev=otherlife72";
 // Display-only translations: canonical game data, saved keys and mechanics stay unchanged.
 export const english = {
-  地球轉生所: "Earthlife Atlas",
-  地球轉生所首頁: "Earthlife Atlas home",
-  "地球轉生所｜下一次，成為誰？": "Earthlife Atlas | Who will you become?",
-  "假如能重新出生，你會成為誰？跨越八個年代、二十四種生命的地球轉生冒險。":
-    "Who would you become if you could be born again? Explore eight eras and twenty-four lives on Earth.",
+  地球轉生所: "OTHER LIFE",
+  地球轉生所首頁: "OTHER LIFE home",
+  "地球轉生所｜下一次，成為誰？": "OTHER LIFE | Who will you become?",
+  "假如能重新出生，你會成為誰？跨越八個年代、七十二種生命的地球轉生冒險。":
+    "Who would you become if you could be born again? Explore eight eras and seventy-two lives on Earth.",
   開始旅程: "Begin a journey",
   生命圖鑑: "Life Atlas",
   關於實驗: "About",
@@ -325,6 +326,13 @@ for (const [name, description] of Object.entries({
 
 // One pass, longest phrases first, prevents shorter labels from changing complete sentences.
 Object.assign(english, storyEnglish, uiEnglish);
+for (const era of lifeCatalog)
+  for (const species of era.species) {
+    if (english[`你是${species[0]}。`]) continue;
+    const name = english[species[0]] || species[0];
+    const article = /^[aeiou]/i.test(name) ? "an" : "a";
+    english[`你是${species[0]}。`] = `you are ${article} ${name}.`;
+  }
 const phrasePattern = new RegExp(
   Object.keys(english)
     .sort((a, b) => b.length - a.length)

@@ -1,5 +1,5 @@
-import { eras, resolveStats, chooseLife } from "./data.js?rev=sharecard";
-import { allStories, profiles } from "./stories-all.js?rev=sharecard";
+import { eras, resolveStats, chooseLife } from "./data.js?rev=otherlife72";
+import { allStories, profiles } from "./stories-all.js?rev=otherlife72";
 export const lifeKeys = Object.keys(allStories);
 export function seeded(seed) {
   let n = seed >>> 0;
@@ -121,8 +121,8 @@ export function freshRun(filter = "all") {
 const eraTimes = {
   carboniferous: "約 3.26 億至 3 億年前",
   jurassic: "約 1.99 億至 1.45 億年前",
-  cretaceous: "約 7,200 萬至 6,600 萬年前",
-  iceage: "約 3 萬至 2 萬年前",
+  cretaceous: "約 8,500 萬至 6,600 萬年前",
+  iceage: "約 3.6 萬至 1.3 萬年前",
 };
 export const catalog = eras.map((era) => ({
   ...era,

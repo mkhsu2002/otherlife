@@ -1,4 +1,4 @@
-# 地球轉生所 / Earthlife Atlas
+# 地球轉生所 / OTHER LIFE
 
 An original, buildless Traditional Chinese / English browser game. Open the deployed Site, or serve `dist/` with any static HTTP server (`python -m http.server --directory dist 8765`). No build step, backend, paid API, or user account inside the game.
 
@@ -26,10 +26,11 @@ AI 大幅降低了把想法做出來的門檻。但能做出來之後，更重�
 
 - 正式網站：https://otherlife.icareu.tw/
 - 唯一開發來源：https://github.com/mkhsu2002/otherlife ，正式分支 `main`。
-- 8個年代、24種生命；每種4章、8個可達事件、3個分支結局，共192事件與72個結局標題。
+- 8個年代、72種生命，每代9種；每種4章、8個可達事件、3個分支結局，共576事件與216個結局標題。
 - 自由抽籤、指定年代、今日共同起點、結果回顧、生命圖鑑與同籤挑戰。
 - 遊戲機率與三項數值屬敘事設計，不是實際出生、存活或生命價值評分。
-- 完整繁體中文／英文；語言切換保留當前旅程。
+- 完整繁體中文／英文；語言切換保留當前旅程。揭曉、四章旅程、結局有階段標示；選擇後顯示後果並聚焦明確的下一章按鈕，最後一章前往結局。
+- 新增48種生命的選項各有數值取捨，不提供每項數值都更好的單一選項。自由抽籤每種約1/72，指定年代約1/9；是遊戲設計而非自然機率。
 - 結果分享例：https://otherlife.icareu.tw/#r=carboniferous-1.42.0101.zh-Hant
 - 同籤挑戰例：https://otherlife.icareu.tw/#c=carboniferous-1.42.zh-Hant
 - 分享結果唯讀，不會自動加入朋友的圖鑑；對方可從同一起點遊玩。分享參數只含生命ID、種子、選擇與語言，沒有個人資料或整本圖鑑。
@@ -47,13 +48,14 @@ AI 大幅降低了把想法做出來的門檻。但能做出來之後，更重�
 - 提供JSON備份匯入／匯出與清除資料；匯入上限250KB且驗證資料格式。匯入會取代當前圖鑑，想保留兩份時先匯出。
 - 目前為正式宣傳前的單一乾淨模型，沒有舊規則分流、舊連結相容或歷史存檔遷移。
 - 日期與地點依各生命的來源情境呈現；年代篩選顯示情境範圍，不宣稱同一紀的所有生命同時存在。
-- [內容與來源索引](docs/content-audit.md)涵蓋全部24種；其餘18種的實際查核範圍見三份`docs/research-*.md`。故事細節是有證據界線的想像，不是完整生物／歷史重建。
+- [內容與來源索引](docs/content-audit.md)涵蓋全部72種；原24種與新增48種的實際查核範圍分別見`docs/research-*.md`及`docs/research-expansion-*.md`。故事細節是有證據界線的想像，不是完整生物／歷史重建。
 - 主機平台有基本Cloudflare流量統計，公開隱私文案有說明。遊戲不要求姓名／電子郵件、不上傳圖鑑，也沒有自己的分析後端。
 
 ## 專案結構
 
 - `dist/data.js`：年代／基本目錄、抽選與數值純函式。
-- `dist/stories.js`、`stories-early.js`、`stories-middle.js`、`stories-recent.js`：24種雙語故事。
+- `dist/stories.js`、`stories-early.js`、`stories-middle.js`、`stories-recent.js`：原24種雙語故事。
+- `dist/expansion-early.js`、`expansion-middle.js`、`expansion-recent.js`：新增48種雙語故事、目錄與來源。
 - `dist/story-kit.js`：共用故事結構與雙語驗證；`stories-all.js`整合故事與情境資料。
 - `dist/engine.js`：唯一遊戲規則、種子、分支、結果重播與分享參數驗證。
 - `dist/knowledge.js`：來源與證據範圍。
@@ -73,7 +75,7 @@ Cloudflare Pages專案`otherlife`，正式分支`main`，輸出`dist/`，帳號I
 CLOUDFLARE_ACCOUNT_ID=82af99e90d342a30d2386efaa8ef4966 npx wrangler pages deploy dist --project-name otherlife --branch main
 ```
 
-使用安全儲存中的Wrangler授權，沒有repo／runtime secret。完成須核對GitHub、Cloudflare部署commit、公開資產及遊戲／分享／音樂行為。[發布驗證](docs/release-verification.md)記錄本次結果。主機對資產有快取，入口與模組的`?rev=sharecard`只用於部署快取識別，不是多套遊戲規則。
+使用安全儲存中的Wrangler授權，沒有repo／runtime secret。完成須核對GitHub、Cloudflare部署commit、公開資產及遊戲／分享／音樂行為。[發布驗證](docs/release-verification.md)記錄本次結果。主機對資產有快取，入口與模組的`?rev=otherlife72`只用於部署快取識別，不是多套遊戲規則。
 
 GitHub品質檢查只在遊戲來源、測試、套件／部署設定或workflow變更時觸發；docs-only不啟動完整CI或部署，沒有排程空跑。
 
@@ -82,3 +84,5 @@ GitHub品質檢查只在遊戲來源、測試、套件／部署設定或workflow
 Copyright © 2026 M.K. 本repo原創程式、圖像與音樂採[MIT License](LICENSE)。作者：[M.K. Bio](https://mkhsu.icareu.tw/)。參考作品的致謝不代表取得其程式、美術或資料授權；外部資源保有各自權利。
 
 第三方QR產生器qrcode-generator 2.0.4採MIT，授權見`dist/vendor/LICENSE.qrcode.txt`；jsQR 1.4.0採Apache-2.0，僅用於開發測試，不送至玩家瀏覽器。分享插畫是概念性地球意象，非特定年代的地理重建。
+
+共用社群預覽可由`scripts/social-cover.mjs`重建：以靜態HTTP服務repo根目錄，在瀏覽器呼叫`socialCover()`並以1200×630儲存Canvas；底圖與QR皆使用repo本機資產。

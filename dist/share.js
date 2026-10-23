@@ -1,6 +1,6 @@
-import { drawShareQR } from "./share-qr.js?rev=sharecard";
-import { lifeFor, encodeRun } from "./engine.js?rev=sharecard";
-import { translateText } from "./i18n.js?rev=sharecard";
+import { drawShareQR } from "./share-qr.js?rev=otherlife72";
+import { lifeFor, encodeRun } from "./engine.js?rev=otherlife72";
+import { translateText } from "./i18n.js?rev=otherlife72";
 export function shareURL(run, language, kind = "r") {
   return new URL(
     "/" + encodeRun(run, kind, language),
@@ -11,7 +11,7 @@ export function shareText(run, title, language) {
   const life = lifeFor(run.key);
   const t = (s) => translateText(s, language);
   return language === "en"
-    ? `I became ${t(life.species[0])} in Earthlife Atlas — ${t(title)}. What story will you live?`
+    ? `I became ${t(life.species[0])} in OTHER LIFE — ${t(title)}. What story will you live?`
     : `我在地球轉生所成為${life.species[0]}，留下「${title}」的故事。你會走出怎樣的一生？`;
 }
 export function socialLinks(url, text) {
@@ -143,7 +143,7 @@ export async function resultImage(run, result, language, portrait = false) {
   c.fill();
   c.fillStyle = "#264c43";
   c.font = "500 25px system-ui";
-  c.fillText("EARTHLIFE ATLAS", 86, 98);
+  c.fillText("OTHER LIFE", 86, 98);
   const fit = (text, base, min, width = 936) => {
     let size = base;
     do {

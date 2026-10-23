@@ -1,4 +1,4 @@
-import { lifeFor, validRun } from "./engine.js?rev=sharecard";
+import { lifeFor, validRun, lifeKeys } from "./engine.js?rev=otherlife72";
 export const STORAGE_KEY = "earthlife-save";
 const recordOK = (r) =>
   r &&
@@ -20,7 +20,7 @@ export function activeOK(a) {
     a.step >= -1 &&
     a.step <= 3 &&
     typeof a.pending === "boolean" &&
-    (a.step>=0 || !a.pending) &&
+    (a.step >= 0 || !a.pending) &&
     a.run.choices.length === (a.step < 0 ? 0 : a.step + (a.pending ? 1 : 0))
   );
 }
@@ -63,7 +63,7 @@ export function importState(text) {
     s.records.length > 100 ||
     !s.records.every(recordOK) ||
     !Array.isArray(s.unlocked) ||
-    s.unlocked.length > 24 ||
+    s.unlocked.length > lifeKeys.length ||
     !s.unlocked.every((k) => typeof k === "string" && lifeFor(k)) ||
     (s.active !== null && !activeOK(s.active))
   )
