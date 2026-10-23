@@ -1,4 +1,4 @@
-import { pilots } from "./stories.js";
+import { pilots } from "./stories.js?v=2";
 export const sources = {
   "cambrian-2": {
     name: "Smithsonian",

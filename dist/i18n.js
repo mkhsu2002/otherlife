@@ -1,5 +1,5 @@
-import {storyEnglish} from './stories.js';
-import {uiEnglish} from './ui-copy.js';
+import {storyEnglish} from './stories.js?v=2';
+import {uiEnglish} from './ui-copy.js?v=2';
 // Display-only translations: canonical game data, saved keys and mechanics stay unchanged.
 export const english = {
   '地球轉生所':'Earthlife Atlas',

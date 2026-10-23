@@ -1,4 +1,5 @@
 export const uiEnglish = {
+  "網站使用基本流量統計；遊戲不要求姓名或電子郵件，存檔保留於本機。": "The site uses basic traffic statistics. The game asks for no name or email; saves stay on your device.",
   複製同籤連結: "Copy challenge link",
   "約 5.2 億至 5 億年前": "About 520–500 million years ago",
   關閉小筆記: "Close field note",

@@ -21,6 +21,11 @@
 - 已修復獨立審查發現的 paused/run/shared 混用；回歸測試確認自己的起點與選擇仍可恢復。
 - 瀏覽器驗證剪貼簿拒絕的手動複製、分享取消無錯誤、損壞備份不覆寫現存資料。
 
+## 正式部署後發現與處理
+- 首次部署 production f5f27862 對應 5f814f8，API success、commit_dirty=false。
+- 所有 12 個非 HTML 可服務資產逐位元一致；HTML 額外注入既有 Cloudflare traffic beacon。公開隱私說明已補充基本流量統計，將以移除已識別單一 beacon 後的 HTML 及 metadata 比對作為驗證。
+- Zone 把靜態資產 max-age 設為 14400 秒，因此入口、樣式與所有模組 import 加上 ?v=2，避免新入口載入舊快取。
+
 ## 待完成
 - 對準最終 GitHub main commit 的 Cloudflare production deployment 成功。
 - 無憑證公開讀回首頁、全部靜態模組與 OG 圖，核對檔案雜湊。

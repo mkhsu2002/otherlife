@@ -28,7 +28,7 @@ AI 大幅降低了把想法做出來的門檻。但能做出來之後，更重�
 - Uniform era draw followed by uniform scenario draw. These are explicitly game weights, not scientific birth probabilities.
 - Life reveal → 4 chapters × 2 choices → branching narrative outcome → share/replay/collection. Six pilot lives have eight reachable events each and three endings per life; the other 18 retain the general event routes.
 - Three narrative stats (0–100), visible base effects plus seeded integer ±4 variation. Rule version 2 freezes replay behavior for shared links.
-- Completed journeys are stored locally (latest 100), separately from permanent discoveries. Unfinished journeys survive reloads. No backend analytics or invented social proof.
+- Completed journeys are stored locally (latest 100), separately from permanent discoveries. Unfinished journeys survive reloads. No game-owned analytics backend or invented social proof. Hosting injects a basic Cloudflare traffic beacon on this domain; the in-game privacy copy discloses traffic statistics.
 - The About page explains play, limitations, sharing and local data. Production design analysis stays in repository documentation.
 
 ## Reference analysis
@@ -85,3 +85,5 @@ This license applies to this repository only. The acknowledgement of [1in8b.life
 - Run `npm test` (catalog, deterministic links, all pilot branches, local saves and bilingual UI) and `npm run check` before deployment. Verify visitor access without credentials, exact assets and share replay against the deployed commit. See [release verification](docs/release-verification.md).
 
 GitHub `Game quality` checks run only for game source, tests, package/deploy configuration or the workflow itself. Documentation-only changes do not trigger full checks or production deployment. There is no polling or scheduled build.
+
+The hosting zone sets a four-hour asset max-age despite Pages revalidation headers. Version 2 uses `?v=2` on app, style and every module import to avoid mixing previously cached version 1 assets. Future releases must preserve old replay rule behavior and change the asset revision when changing these files.

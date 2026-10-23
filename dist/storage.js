@@ -1,4 +1,4 @@
-import { lifeFor, validRun } from "./engine.js";
+import { lifeFor, validRun } from "./engine.js?v=2";
 export const STORAGE_KEY = "earthlife-v2";
 const recordOK = (r) =>
   r &&

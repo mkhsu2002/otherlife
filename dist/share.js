@@ -1,5 +1,5 @@
-import { lifeFor, encodeRun } from "./engine.js";
-import { translateText } from "./i18n.js";
+import { lifeFor, encodeRun } from "./engine.js?v=2";
+import { translateText } from "./i18n.js?v=2";
 export function shareURL(run, language, kind = "r") {
   return new URL(
     "/" + encodeRun(run, kind, language),

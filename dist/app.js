@@ -1,5 +1,5 @@
-import { eras, stages, events, chooseLife, resolveStats } from "./data.js";
-import { translateText, translateMarkup } from "./i18n.js";
+import { eras, stages, events, chooseLife, resolveStats } from "./data.js?v=2";
+import { translateText, translateMarkup } from "./i18n.js?v=2";
 import {
   lifeFor,
   replay,
@@ -11,23 +11,23 @@ import {
   dailyRun,
   freshRun,
   pilotKeys,
-} from "./engine.js";
+} from "./engine.js?v=2";
 import {
   STORAGE_KEY,
   normalizeState,
   addRecord,
   importState,
   activeOK,
-} from "./storage.js";
-import { pilots } from "./stories.js";
-import { knowledgeFor } from "./knowledge.js";
+} from "./storage.js?v=2";
+import { pilots } from "./stories.js?v=2";
+import { knowledgeFor } from "./knowledge.js?v=2";
 import {
   shareURL,
   shareText,
   socialLinks,
   resultImage,
   downloadBlob,
-} from "./share.js";
+} from "./share.js?v=2";
 const $ = (s) => document.querySelector(s);
 let records = [],
   saveOK = true,
@@ -364,7 +364,7 @@ function renderGrid() {
 function renderAbout() {
   setHTML(
     "#app",
-    `<section class="about"><span class="eyebrow">ONE PLANET, MANY STORIES</span><h1>把視角放小，<br>把世界看大。</h1><p class="intro">如果生命可以重新抽籤，我們還會用同一把尺，衡量每一種存在嗎？</p><article><h2>這個版本怎麼玩？</h2><p>所有生命都能探索；六段分支故事帶你更靠近各自的世界。</p><p>你的選擇會改變後續篇章與結局；數值是敘事指標，不代表生命價值。</p></article><article><h2>隨機，不等於真實機率</h2><p>隨機生命，每種約 1/24；指定年代則每種約 1/3。今日共同起點另以當日固定起點開始。</p></article><article><h2>地球的歷史，比遊戲更複雜</h2><p>古地理與生態都比故事複雜。部分名稱代表類群而非單一物種；年代是情境參照。</p><p>故事為想像情節；圖示為象徵，不是物種復原圖。</p></article><article><h2>分享這一生</h2><p>你可以分享一次結果，或邀朋友從相同起點開始。相同起點與選擇會重現相同結果，這不是真實出生機率或科學預測。</p></article><article><h2>關於你的資料</h2><p>進度與語言偏好只保存在這個瀏覽器。可匯出備份；清除網站資料會移除存檔。分享是自願的，不會自動發布到社群。</p></article><button class="primary" id="aboutStart">準備好，去見見世界 <span>↗</span></button></section>`,
+    `<section class="about"><span class="eyebrow">ONE PLANET, MANY STORIES</span><h1>把視角放小，<br>把世界看大。</h1><p class="intro">如果生命可以重新抽籤，我們還會用同一把尺，衡量每一種存在嗎？</p><article><h2>這個版本怎麼玩？</h2><p>所有生命都能探索；六段分支故事帶你更靠近各自的世界。</p><p>你的選擇會改變後續篇章與結局；數值是敘事指標，不代表生命價值。</p></article><article><h2>隨機，不等於真實機率</h2><p>隨機生命，每種約 1/24；指定年代則每種約 1/3。今日共同起點另以當日固定起點開始。</p></article><article><h2>地球的歷史，比遊戲更複雜</h2><p>古地理與生態都比故事複雜。部分名稱代表類群而非單一物種；年代是情境參照。</p><p>故事為想像情節；圖示為象徵，不是物種復原圖。</p></article><article><h2>分享這一生</h2><p>你可以分享一次結果，或邀朋友從相同起點開始。相同起點與選擇會重現相同結果，這不是真實出生機率或科學預測。</p></article><article><h2>關於你的資料</h2><p>進度與語言偏好只保存在這個瀏覽器。可匯出備份；清除網站資料會移除存檔。分享是自願的，不會自動發布到社群。</p><p>網站使用基本流量統計；遊戲不要求姓名或電子郵件，存檔保留於本機。</p></article><button class="primary" id="aboutStart">準備好，去見見世界 <span>↗</span></button></section>`,
   );
   $("#aboutStart").onclick = () => {
     if (life && step < 4) lifePaused();

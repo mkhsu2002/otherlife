@@ -1,5 +1,5 @@
-import { eras, events, resolveStats, chooseLife } from "./data.js";
-import { pilots } from "./stories.js";
+import { eras, events, resolveStats, chooseLife } from "./data.js?v=2";
+import { pilots } from "./stories.js?v=2";
 export const RULE_VERSION = 2;
 export const pilotKeys = Object.keys(pilots);
 export function lifeFor(key) {
