@@ -22,68 +22,60 @@ AI 大幅降低了把想法做出來的門檻。但能做出來之後，更重�
 
 還有一些想傳達的東西，留在遊戲裡，等你自己發現。
 
-## Design
-- Cream, sage and ocean-blue palette; original illustrated SVG Earth; responsive desktop/mobile layout.
-- 8 curated eras, 3 life scenarios per era (24 total), including extinct animals, living animals, plants, marine sessile organisms and human roles.
-- Uniform era draw followed by uniform scenario draw. These are explicitly game weights, not scientific birth probabilities.
-- Life reveal → 4 chapters × 2 choices → branching narrative outcome → share/replay/collection. Six pilot lives have eight reachable events each and three endings per life; the other 18 retain the general event routes.
-- Three narrative stats (0–100), visible base effects plus seeded integer ±4 variation. Rule version 2 freezes replay behavior for shared links.
-- Completed journeys are stored locally (latest 100), separately from permanent discoveries. Unfinished journeys survive reloads. No game-owned analytics backend or invented social proof. Hosting injects a basic Cloudflare traffic beacon on this domain; the in-game privacy copy discloses traffic statistics.
-- The About page explains play, limitations, sharing and local data. Production design analysis stays in repository documentation.
+## 目前遊戲
 
-## Reference analysis
-The observed 1in8b.life/zh experience uses a weighted birth draw, birth-certificate reveal, continuous age-based simulation, age-gated events, four stats, speed/pause controls and a history/summary loop. The new game retains only the abstract draw/choice/reflect/replay loop. It replaces birth-country probability sampling with curated era–habitat–organism pairs, a continuous timer with deliberate short chapters, and paper/passport styling with a bright ecological visual identity. No source code, artwork, text or data copied.
+- 正式網站：https://otherlife.icareu.tw/
+- 唯一開發來源：https://github.com/mkhsu2002/otherlife ，正式分支 `main`。
+- 8個年代、24種生命；每種4章、8個可達事件、3個分支結局，共192事件與72個結局標題。
+- 自由抽籤、指定年代、今日共同起點、結果回顧、生命圖鑑與同籤挑戰。
+- 遊戲機率與三項數值屬敘事設計，不是實際出生、存活或生命價值評分。
+- 完整繁體中文／英文；語言切換保留當前旅程。
+- 結果分享例：https://otherlife.icareu.tw/#r=carboniferous-1.42.0101.zh-Hant
+- 同籤挑戰例：https://otherlife.icareu.tw/#c=carboniferous-1.42.zh-Hant
+- 分享結果唯讀，不會自動加入朋友的圖鑑；對方可從同一起點遊玩。分享參數只含生命ID、種子、選擇與語言，沒有個人資料或整本圖鑑。
+- 系統分享、LINE／Facebook／X入口與PNG貼文／限動卡；Instagram／Threads可使用下載圖片或系統分享。玩家自行最終送出，不自動發文。共用OG圖，不宣稱每個結果有不同社群預覽。
 
-## Files
-- `dist/data.js`: era catalog, event sets and pure random/stat functions.
-- `dist/i18n.js`: complete English display translations; language changes preserve the current game and canonical saved data.
-- `dist/app.js`: rendering, navigation, chapter state, outcomes and local persistence.
-- `dist/style.css`: responsive styling and reduced-motion support.
-- `dist/index.html`, `dist/icon.svg`: entry point and original icon.
-- `wrangler.jsonc`: Cloudflare Pages deployment configuration.
-- `package.json`: dependency-free local commands (the source ZIP did not include a package manifest).
+## 輕音樂
 
-## Limitations
-This catalog covers a curated catalog, not every species, place or historical era. Locations are representative and ancient localities use modern geographic references. Scenarios, decisions and numerical effects are fictionalized; outcomes do not estimate lifespan or extinction. Life symbols use device emoji or abstract marks, explicitly described as symbolic rather than reconstructions; the Earth is custom SVG. Google Fonts is optional; system fonts work when unavailable.
+原創環境旋律以柔和延音和弦、稀疏五聲音階旋律及輕回聲構成。瀏覽器本機合成，沒有外部音樂授權、付費API或第三方音樂請求。音樂與程式均適用本repo的MIT授權。
 
-## Checks
-Run `node --test tests.mjs` for catalog, sampling and stat-boundary coverage. `node --check dist/app.js` checks application syntax.
+每次開啟預設關閉，由玩家點擊啟動；可停播、調音量。只記住音量偏好，切換頁籤時暫停，回到遊戲時僅在玩家先前已啟用的情況下恢復。語言／頁面切換不增加播放器。裝置無法播放時顯示簡短訊息，遊戲仍可正常操作。
 
-## Cloudflare deployment
-- Public source repository: https://github.com/mkhsu2002/otherlife
-- Production URL: https://otherlife.icareu.tw/
-- Cloudflare Pages project: `otherlife`, production branch: `main`, static output: `dist/`.
-- Deploy to the verified account by setting `CLOUDFLARE_ACCOUNT_ID=82af99e90d342a30d2386efaa8ef4966` for the deployment command; no global account defaults are changed.
-- Uses Direct Upload with the existing authorized Wrangler login. Install Wrangler from the official npm registry if needed, then run `npm run deploy`. No build step or runtime secrets are required. Cloudflare API readback on 2026-10-23 confirmed `source: null` and an ad-hoc Direct Upload deployment: pushing GitHub does not automatically redeploy. Keep all development in this GitHub repository; deploy the exact clean `main` commit and verify the live files afterward. Do not deploy the obsolete Sites copy. Direct Upload projects cannot be converted in place to native Git integration; automatic deployment would require a separately configured CI upload or a deliberate project migration.
-- Validate with `npm test` and `npm run check`. Preview using `npm run dev`.
-- Original source: `earthlife-source.zip` (source commit `ffeed6d06f8730b4849f9418e5dd4c3adc203bad`). The obsolete Sites hosting metadata was removed; game content and mechanics were preserved.
-- The result screen includes optional invitations to explore further. These open HTTPS URLs in a new tab, without redirects or additional tracking.
+## 資料與內容查核
 
-## Language and local storage
-The header switches between 繁體中文 and English. Traditional Chinese is the default. The choice is remembered in localStorage as `earthlife-language` when storage is available. Switching languages preserves the current life, chapter, stats, pending choice, paused journey, era filters and completed collection; it does not reroll or reset a life.
+- 無帳號、後端、資料庫或雲端存檔。`earthlife-save`保存本機圖鑑、最近100段旅程與未完成進度；已解鎖生命獨立保留。`earthlife-language`與`earthlife-music-volume`保存偏好。
+- 提供JSON備份匯入／匯出與清除資料；匯入上限250KB且驗證資料格式。匯入會取代當前圖鑑，想保留兩份時先匯出。
+- 目前為正式宣傳前的單一乾淨模型，沒有舊規則分流、舊連結相容或歷史存檔遷移。
+- 日期與地點依各生命的來源情境呈現；年代篩選顯示情境範圍，不宣稱同一紀的所有生命同時存在。
+- [內容與來源索引](docs/content-audit.md)涵蓋全部24種；其餘18種的實際查核範圍見三份`docs/research-*.md`。故事細節是有證據界線的想像，不是完整生物／歷史重建。
+- 主機平台有基本Cloudflare流量統計，公開隱私文案有說明。遊戲不要求姓名／電子郵件、不上傳圖鑑，也沒有自己的分析後端。
 
-Version 2 uses `earthlife-v2`: records (latest 100), permanent unlocked keys, and an active versioned run. Existing valid `earthlife-v1` records are migrated on read; prior already-evicted records cannot be recovered. Import/export supports validated JSON up to 250 KB. Imports replace this browser’s game save; export first if retaining both collections matters. Language remains under `earthlife-language`. Saves from the old Sites origin are not automatically transferred to this domain. There are no accounts or server-side saves.
+## 專案結構
+
+- `dist/data.js`：年代／基本目錄、抽選與數值純函式。
+- `dist/stories.js`、`stories-early.js`、`stories-middle.js`、`stories-recent.js`：24種雙語故事。
+- `dist/story-kit.js`：共用故事結構與雙語驗證；`stories-all.js`整合故事與情境資料。
+- `dist/engine.js`：唯一遊戲規則、種子、分支、結果重播與分享參數驗證。
+- `dist/knowledge.js`：來源與證據範圍。
+- `dist/storage.js`：本機資料、備份驗證與永久解鎖。
+- `dist/share.js`：分享入口、可複製文字、1080×1350／1080×1920圖片。
+- `dist/music.js`：原創曲譜、聲音生命週期與無障礙音樂控制。
+- `dist/app.js`、`i18n.js`、`ui-copy.js`、`style.css`、`index.html`：介面與語系。
+
+## 開發、驗證與部署
+
+不需安裝依賴或建置。`npm run dev`開啟本機預覽；`npm test`驗證所有生命、分享參數、儲存、雙語與音樂；`npm run check`檢查執行模組語法。
+
+Cloudflare Pages專案`otherlife`，正式分支`main`，輸出`dist/`，帳號ID `82af99e90d342a30d2386efaa8ef4966`。平台是Direct Upload，GitHub推送不會自動部署；所有開發先同步repo，再從乾淨的main提交發布：
+
+```sh
+CLOUDFLARE_ACCOUNT_ID=82af99e90d342a30d2386efaa8ef4966 npx wrangler pages deploy dist --project-name otherlife --branch main
+```
+
+使用安全儲存中的Wrangler授權，沒有repo／runtime secret。完成須核對GitHub、Cloudflare部署commit、公開資產及遊戲／分享／音樂行為。[發布驗證](docs/release-verification.md)記錄本次結果。主機對資產有快取，入口與模組的`?rev=launch`只用於部署快取識別，不是多套遊戲規則。
+
+GitHub品質檢查只在遊戲來源、測試、套件／部署設定或workflow變更時觸發；docs-only不啟動完整CI或部署，沒有排程空跑。
 
 ## License
-Copyright © 2026 M.K. This repository’s original code and assets are released under the [MIT License](LICENSE), allowing free use, modification and redistribution under its terms. Author: [M.K. Bio](https://mkhsu.icareu.tw/).
 
-This license applies to this repository only. The acknowledgement of [1in8b.life](https://1in8b.life/zh/) describes creative inspiration; it does not claim that the reference website is open source or grant permission to use its code, artwork, text or data. External resources and fonts retain their respective licenses.
-
-
-## Version 2 — shared journeys (2026-10-23)
-- Production and sharing origin: https://otherlife.icareu.tw/
-- Result example: https://otherlife.icareu.tw/#r=2.modern-1.42.0101.zh-Hant
-- Same-beginning challenge: https://otherlife.icareu.tw/#c=2.modern-1.42.zh-Hant
-- Result links open read-only and never add the sender’s journey to the recipient’s collection. Starting from that result creates a new journey. A shared result must not overwrite an existing unfinished local save.
-- The URL carries only a rule version, catalog key, 32-bit positive seed, four binary choices (result only), and language. Unknown versions, invalid keys and malformed inputs are rejected. This is an editable game token, not a verified score.
-- The daily start uses the America/Vancouver calendar date and a deterministic pilot selection. It is browser-local and not a clock-enforced competition.
-- PNG exports: 1080×1350 post and 1080×1920 story. System sharing uses a prepared PNG when file sharing is supported, otherwise text/link. Clipboard denial exposes selectable text. Cancelled sharing is silent. Social links only open composition pages; the player submits them.
-- Social crawlers receive a common 1200×630 `social.png`, not a per-result preview. Fragment data is resolved by the visitor’s browser. `social.png` is a static Canvas composition using system typography and geometric shapes; it contains no player data.
-- Instagram/Threads use downloaded cards or the operating-system share sheet; no direct-post integration is claimed.
-- New modules: `engine.js` (replay and link contract), `stories.js` (six bilingual pilot stories), `knowledge.js` (source scope), `storage.js` (migration/backup), `share.js` (image/share helpers), `ui-copy.js` (new UI translations).
-- Content boundaries and all 24 audit statuses: [content audit](docs/content-audit.md). The remaining 18 dedicated story expansions and per-result server-rendered OG pages belong to P2.
-- Run `npm test` (catalog, deterministic links, all pilot branches, local saves and bilingual UI) and `npm run check` before deployment. Verify visitor access without credentials, exact assets and share replay against the deployed commit. See [release verification](docs/release-verification.md).
-
-GitHub `Game quality` checks run only for game source, tests, package/deploy configuration or the workflow itself. Documentation-only changes do not trigger full checks or production deployment. There is no polling or scheduled build.
-
-The hosting zone sets a four-hour asset max-age despite Pages revalidation headers. Version 2 uses `?v=2` on app, style and every module import to avoid mixing previously cached version 1 assets. Future releases must preserve old replay rule behavior and change the asset revision when changing these files.
+Copyright © 2026 M.K. 本repo原創程式、圖像與音樂採[MIT License](LICENSE)。作者：[M.K. Bio](https://mkhsu.icareu.tw/)。參考作品的致謝不代表取得其程式、美術或資料授權；外部資源保有各自權利。

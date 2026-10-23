@@ -4,7 +4,7 @@ let engine;
 try {
   engine = await import("./dist/engine.js");
 } catch {}
-test("versioned result links reproduce every decision and reject malformed input", () => {
+test("result links reproduce every decision and reject malformed input", () => {
   assert(engine, "sharing engine must exist");
   for (const key of [
     "cambrian-2",
@@ -25,22 +25,23 @@ test("versioned result links reproduce every decision and reject malformed input
     }
   for (const hash of [
     "#r=<script>",
-    "#r=3.modern-1.1.0000.en",
-    "#r=2.modern-9.1.0000.en",
-    "#r=2.modern-1.0.0000.en",
-    "#r=2.modern-1.1.0002.en",
-    "#r=2.modern-1.1.000.en",
+    "#r=modern-1.-1.0000.en",
+    "#r=modern-9.1.0000.en",
+    "#r=modern-1.0.0000.en",
+    "#r=modern-1.1.0002.en",
+    "#r=modern-1.1.000.en",
     "#r=" + "a".repeat(1000),
   ])
     assert.equal(engine.parseRun(hash), null);
 });
-test("pilot stories branch, have three reachable endings and deterministic bounded stats", () => {
+test("dedicated stories branch, have three reachable endings and deterministic bounded stats", () => {
   assert(engine);
-  for (const key of engine.pilotKeys) {
+  for (const key of engine.lifeKeys) {
     const titles = new Set();
     for (let mask = 0; mask < 16; mask++) {
       const run = {
         key,
+
         seed: 42,
         choices: Array.from({ length: 4 }, (_, i) => (mask >> i) & 1),
       };
@@ -68,12 +69,17 @@ let storage;
 try {
   storage = await import("./dist/storage.js");
 } catch {}
-test("migration preserves unlocks beyond last 100; corrupt backups cannot replace state", () => {
+test("discoveries persist beyond last 100; corrupt backups cannot replace state", () => {
   assert(storage, "versioned storage must exist");
-  const legacy = [
+  const initialRecords = [
     { key: "modern-1", stats: [60, 45, 35], title: "x", date: 1, log: [] },
   ];
-  let state = storage.normalizeState(null, legacy);
+  let state = storage.normalizeState({
+    format: "earthlife",
+    records: initialRecords,
+    unlocked: [],
+    active: null,
+  });
   assert(state.unlocked.includes("modern-1"));
   for (let i = 0; i < 110; i++)
     state = storage.addRecord(state, {
@@ -90,10 +96,10 @@ test("migration preserves unlocks beyond last 100; corrupt backups cannot replac
   assert.deepEqual(storage.importState(JSON.stringify(state)), state);
 });
 
-test("all pilot text has English coverage and eight reachable events across seeds and routes", async () => {
-  const { pilots } = await import("./dist/stories.js"),
+test("all core story text has English coverage and eight reachable events across seeds and routes", async () => {
+  const { coreStories } = await import("./dist/stories.js"),
     { translateText } = await import("./dist/i18n.js");
-  for (const key of Object.keys(pilots)) {
+  for (const key of Object.keys(coreStories)) {
     const names = new Set();
     for (const seed of [42, 43])
       for (let mask = 0; mask < 16; mask++) {
@@ -107,12 +113,12 @@ test("all pilot text has English coverage and eight reachable events across seed
         assert(!/\p{Script=Han}/u.test(translateText(x, "en")), x);
       else if (x && typeof x === "object") Object.values(x).forEach(visit);
     };
-    visit(pilots[key]);
+    visit(coreStories[key]);
   }
 });
 
 test("backups reject impossible pending chapters and invalid records", () => {
-  const base = { version: 2, records: [], unlocked: [], active: null };
+  const base = { format: "earthlife", records: [], unlocked: [], active: null };
   for (const active of [
     {
       run: { key: "modern-1", seed: 1, choices: [0] },
@@ -147,7 +153,7 @@ test("share URLs use public origin and encode social text safely", async () => {
   const run = { key: "modern-1", seed: 42, choices: [0, 1, 0, 1] };
   assert.equal(
     shareURL(run, "en"),
-    "https://otherlife.icareu.tw/#r=2.modern-1.42.0101.en",
+    "https://otherlife.icareu.tw/#r=modern-1.42.0101.en",
   );
   assert.deepEqual(
     engine.parseRun(new URL(shareURL(run, "en", "c")).hash).run,

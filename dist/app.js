@@ -1,33 +1,31 @@
-import { eras, stages, events, chooseLife, resolveStats } from "./data.js?v=2";
-import { translateText, translateMarkup } from "./i18n.js?v=2";
+import { catalog as eras } from "./engine.js?rev=launch";
+import { installMusicControls } from "./music.js?rev=launch";
+import { translateText, translateMarkup } from "./i18n.js?rev=launch";
 import {
   lifeFor,
   replay,
   eventFor,
   endingFor,
   validRun,
-  encodeRun,
   parseRun,
   dailyRun,
   freshRun,
-  pilotKeys,
-} from "./engine.js?v=2";
+} from "./engine.js?rev=launch";
 import {
   STORAGE_KEY,
   normalizeState,
   addRecord,
   importState,
   activeOK,
-} from "./storage.js?v=2";
-import { pilots } from "./stories.js?v=2";
-import { knowledgeFor } from "./knowledge.js?v=2";
+} from "./storage.js?rev=launch";
+import { knowledgeFor } from "./knowledge.js?rev=launch";
 import {
   shareURL,
   shareText,
   socialLinks,
   resultImage,
   downloadBlob,
-} from "./share.js?v=2";
+} from "./share.js?rev=launch";
 const $ = (s) => document.querySelector(s);
 let records = [],
   saveOK = true,
@@ -43,7 +41,6 @@ let store = normalizeState(null),
 try {
   store = normalizeState(
     JSON.parse(localStorage.getItem(STORAGE_KEY) || "null"),
-    JSON.parse(localStorage.getItem("earthlife-v1") || "[]"),
   );
   records = store.records;
 } catch {
@@ -80,10 +77,12 @@ try {
   if (localStorage.getItem("earthlife-language") === "en") language = "en";
 } catch {}
 const t = (text) => translateText(text, language);
+let musicControls;
 function setHTML(selector, html) {
   $(selector).innerHTML = translateMarkup(html, language);
 }
 function renderShell() {
+  musicControls?.render();
   document.documentElement.lang = language;
   document.title = t("地球轉生所｜下一次，成為誰？");
   $('meta[name="description"]').setAttribute(
@@ -350,7 +349,8 @@ function renderGrid() {
       .map(
         (e) =>
           `<section class="era-collection"><h2>${e.name}<small>${e.time}</small></h2><div class="collection-grid">${e.species
-            .map((s, i) => {
+            .map((raw, i) => {
+              const s = lifeFor(`${e.id}-${i}`).species;
               const r = store.unlocked.includes(`${e.id}-${i}`);
               return `<article class="specimen ${r ? "unlocked" : "locked"}"><span class="specimen-icon">${r ? s[1] : "✧"}</span><div><small>${r ? "已探索" : "等待相遇"}</small><h3>${s[0]}</h3><p>${s[2]}</p>${r ? `<span class="specimen-title">旅程已收藏</span>` : '<span class="specimen-title">一個還沒開始的故事</span>'}<button class="text-button" data-note="${e.id}-${i}">查看小筆記 →</button></div></article>`;
             })
@@ -364,7 +364,7 @@ function renderGrid() {
 function renderAbout() {
   setHTML(
     "#app",
-    `<section class="about"><span class="eyebrow">ONE PLANET, MANY STORIES</span><h1>把視角放小，<br>把世界看大。</h1><p class="intro">如果生命可以重新抽籤，我們還會用同一把尺，衡量每一種存在嗎？</p><article><h2>這個版本怎麼玩？</h2><p>所有生命都能探索；六段分支故事帶你更靠近各自的世界。</p><p>你的選擇會改變後續篇章與結局；數值是敘事指標，不代表生命價值。</p></article><article><h2>隨機，不等於真實機率</h2><p>隨機生命，每種約 1/24；指定年代則每種約 1/3。今日共同起點另以當日固定起點開始。</p></article><article><h2>地球的歷史，比遊戲更複雜</h2><p>古地理與生態都比故事複雜。部分名稱代表類群而非單一物種；年代是情境參照。</p><p>故事為想像情節；圖示為象徵，不是物種復原圖。</p></article><article><h2>分享這一生</h2><p>你可以分享一次結果，或邀朋友從相同起點開始。相同起點與選擇會重現相同結果，這不是真實出生機率或科學預測。</p></article><article><h2>關於你的資料</h2><p>進度與語言偏好只保存在這個瀏覽器。可匯出備份；清除網站資料會移除存檔。分享是自願的，不會自動發布到社群。</p><p>網站使用基本流量統計；遊戲不要求姓名或電子郵件，存檔保留於本機。</p></article><button class="primary" id="aboutStart">準備好，去見見世界 <span>↗</span></button></section>`,
+    `<section class="about"><span class="eyebrow">ONE PLANET, MANY STORIES</span><h1>把視角放小，<br>把世界看大。</h1><p class="intro">如果生命可以重新抽籤，我們還會用同一把尺，衡量每一種存在嗎？</p><article><h2>這個版本怎麼玩？</h2><p>二十四種生命，各有自己的分支故事。換一個起點，走進另一種世界。</p><p>你的選擇會改變後續篇章與結局；數值是敘事指標，不代表生命價值。</p></article><article><h2>隨機，不等於真實機率</h2><p>隨機生命，每種約 1/24；指定年代則每種約 1/3。今日共同起點另以當日固定起點開始。</p></article><article><h2>地球的歷史，比遊戲更複雜</h2><p>古地理與生態都比故事複雜。部分名稱代表類群而非單一物種；年代是情境參照。</p><p>故事為想像情節；圖示為象徵，不是物種復原圖。</p></article><article><h2>分享這一生</h2><p>你可以分享一次結果，或邀朋友從相同起點開始。相同起點與選擇會重現相同結果，這不是真實出生機率或科學預測。</p></article><article><h2>關於你的資料</h2><p>進度與語言偏好只保存在這個瀏覽器。可匯出備份；清除網站資料會移除存檔。分享是自願的，不會自動發布到社群。</p><p>網站使用基本流量統計；遊戲不要求姓名或電子郵件，存檔保留於本機。</p></article><button class="primary" id="aboutStart">準備好，去見見世界 <span>↗</span></button></section>`,
   );
   $("#aboutStart").onclick = () => {
     if (life && step < 4) lifePaused();
@@ -380,6 +380,7 @@ $(".brand").onclick = (e) => {
 };
 $("#languageToggle").onclick = () =>
   setLanguage(language === "en" ? "zh-Hant" : "en");
+musicControls = installMusicControls({ translate: t, document, window });
 restoreActive();
 renderShell();
 if (!openShare()) render();
@@ -587,7 +588,7 @@ function wireBackup() {
     shared = false;
     clearShareHash();
     try {
-      localStorage.removeItem("earthlife-v1");
+      localStorage.removeItem(STORAGE_KEY);
     } catch {}
     persist();
     renderCollection();

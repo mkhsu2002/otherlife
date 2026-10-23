@@ -1,5 +1,22 @@
 export const uiEnglish = {
-  "網站使用基本流量統計；遊戲不要求姓名或電子郵件，存檔保留於本機。": "The site uses basic traffic statistics. The game asks for no name or email; saves stay on your device.",
+  "約 3.26 億至 3 億年前": "About 326–300 million years ago",
+  "約 1.99 億至 1.45 億年前": "About 199–145 million years ago",
+  "約 7,200 萬至 6,600 萬年前": "About 72–66 million years ago",
+  "約 3 萬至 2 萬年前": "About 30,000–20,000 years ago",
+  "二十四種生命，各有自己的分支故事。換一個起點，走進另一種世界。":
+    "Twenty-four lives, each with a branching story. A new beginning opens another world.",
+  背景音樂: "Background music",
+  音量: "Volume",
+  音樂音量: "Music volume",
+  "音樂：開": "Music: on",
+  "音樂：關": "Music: off",
+  開啟背景音樂: "Turn background music on",
+  關閉背景音樂: "Turn background music off",
+  背景音樂已暫停: "Background music paused",
+  "此裝置暫時無法播放音樂，請稍後再試。":
+    "Music cannot play on this device right now. Please try again later.",
+  "網站使用基本流量統計；遊戲不要求姓名或電子郵件，存檔保留於本機。":
+    "The site uses basic traffic statistics. The game asks for no name or email; saves stay on your device.",
   複製同籤連結: "Copy challenge link",
   "約 5.2 億至 5 億年前": "About 520–500 million years ago",
   關閉小筆記: "Close field note",

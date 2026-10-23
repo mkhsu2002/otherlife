@@ -1,50 +1,8 @@
-// Paired authoring keeps all new story text localized without changing canonical saves.
+import { createStoryKit } from "./story-kit.js?rev=launch";
 export const storyEnglish = {};
-const p = (s) => {
-  const [zh, en] = s.split("|");
-  if (!en) throw Error("Missing English: " + s);
-  storyEnglish[zh] = en;
-  return zh;
-};
-const effects = [
-  [12, 6, -2],
-  [-9, 2, 17],
-];
-function event(title, context, a, b, afterA, afterB) {
-  return [
-    p(title),
-    p(context),
-    [
-      [
-        p(a),
-        p("保留餘裕，適應眼前的變化|Keep a reserve and adapt to the present"),
-        effects[0],
-      ],
-      [
-        p(b),
-        p(
-          "付出資源，迎向另一種可能|Spend resources to try another possibility",
-        ),
-        effects[1],
-      ],
-    ],
-    [p(afterA), p(afterB)],
-  ];
-}
-const E = event;
-function pilot(name, time, note, endings, rows) {
-  return {
-    name: p(name),
-    time: p(time),
-    note: p(note),
-    endings: endings.map(p),
-    chapters: Array.from({ length: 4 }, (_, i) =>
-      rows.slice(i * 2, i * 2 + 2).map((r) => E(...r)),
-    ),
-  };
-}
-export const pilots = {
-  "cambrian-2": pilot(
+const { makeStory } = createStoryKit(storyEnglish);
+export const coreStories = {
+  "cambrian-2": makeStory(
     "海綿的水流之歌|A sponge’s song of currents",
     "約 5.2 億年前（寒武紀情境）|About 520 million years ago (Cambrian setting)",
     "海綿沒有根、葉或魚鰓；許多海綿以流經身體的水取得食物。以下生長反應以選擇呈現，並非有意識的決策。|Sponges have no roots, leaves or fish gills. Many feed from water passing through their bodies. Choices here represent growth responses, not conscious decisions.",
@@ -120,7 +78,7 @@ export const pilots = {
       ],
     ],
   ),
-  "carboniferous-2": pilot(
+  "carboniferous-2": makeStory(
     "樹蕨的林下光影|Light beneath a tree fern canopy",
     "約 3 億年前（石炭紀情境）|About 300 million years ago (Carboniferous setting)",
     "樹蕨類以孢子繁殖，不會開花結果；遊戲中的選擇比喻生長與資源分配，不代表植物能思考。|Tree ferns reproduce by spores, not flowers or fruit. Choices are metaphors for growth and resource allocation, not plant thought.",
@@ -196,7 +154,7 @@ export const pilots = {
       ],
     ],
   ),
-  "cretaceous-0": pilot(
+  "cretaceous-0": makeStory(
     "三角龍的河岸足跡|A Triceratops by the river",
     "約 6,700 萬年前|About 67 million years ago",
     "三角龍是白堊紀晚期北美洲的植食恐龍。這裡的個體互動與選擇是想像情節，不代表已證實的群體行為。|Triceratops was a plant-eating dinosaur of Late Cretaceous North America. Individual interactions and choices here are fictional, not proof of herd behavior.",
@@ -272,7 +230,7 @@ export const pilots = {
       ],
     ],
   ),
-  "iceage-0": pilot(
+  "iceage-0": makeStory(
     "長毛象的草原旅途|A woolly mammoth’s steppe journey",
     "約 2 萬年前|About 20,000 years ago",
     "長毛象適應寒冷、開闊的環境並以草等植物為食。草原旅途是虛構個體的故事，不推算壽命或滅絕原因。|Woolly mammoths were adapted to cold, open environments and fed on grasses and other plants. This individual journey is fictional and predicts neither lifespan nor extinction.",
@@ -348,7 +306,7 @@ export const pilots = {
       ],
     ],
   ),
-  "ancient-0": pilot(
+  "ancient-0": makeStory(
     "稻田的一季|A season in the rice fields",
     "約西元 200 年（歷史想像）|Around AD 200 (historical fiction)",
     "農作隨地方與時代而異。這是以水田、勞動與互助構成的歷史想像，並非某村落的重建或栽培指南。|Farming varied across places and times. This is historical fiction about wet fields, work and mutual help, not a reconstruction of a village or a cultivation guide.",
@@ -424,7 +382,7 @@ export const pilots = {
       ],
     ],
   ),
-  "modern-1": pilot(
+  "modern-1": makeStory(
     "帝王企鵝的海冰一季|An emperor penguin’s sea-ice season",
     "當代南極的一個繁殖季|One breeding season in present-day Antarctica",
     "帝王企鵝繁殖仰賴穩定海冰，育雛與覓食會隨季節變化。此旅程從成鳥視角開始，不把四章當成出生到死亡的一生。|Emperor penguin breeding depends on stable sea ice; chick rearing and feeding change with the seasons. This journey begins with an adult, not a birth-to-death life.",

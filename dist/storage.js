@@ -1,5 +1,5 @@
-import { lifeFor, validRun } from "./engine.js?v=2";
-export const STORAGE_KEY = "earthlife-v2";
+import { lifeFor, validRun } from "./engine.js?rev=launch";
+export const STORAGE_KEY = "earthlife-save";
 const recordOK = (r) =>
   r &&
   lifeFor(r.key) &&
@@ -20,16 +20,17 @@ export function activeOK(a) {
     a.step >= -1 &&
     a.step <= 3 &&
     typeof a.pending === "boolean" &&
+    (a.step>=0 || !a.pending) &&
     a.run.choices.length === (a.step < 0 ? 0 : a.step + (a.pending ? 1 : 0))
   );
 }
-export function normalizeState(raw, legacy = []) {
-  const s = raw?.version === 2 ? raw : {};
-  const records = (Array.isArray(s.records) ? s.records : legacy)
+export function normalizeState(raw) {
+  const s = raw?.format === "earthlife" ? raw : {};
+  const records = (Array.isArray(s.records) ? s.records : [])
     .filter(recordOK)
     .slice(0, 100);
   return {
-    version: 2,
+    format: "earthlife",
     records,
     unlocked: [
       ...new Set(
@@ -57,7 +58,7 @@ export function importState(text) {
   const s = JSON.parse(text);
   if (
     !s ||
-    s.version !== 2 ||
+    s.format !== "earthlife" ||
     !Array.isArray(s.records) ||
     s.records.length > 100 ||
     !s.records.every(recordOK) ||

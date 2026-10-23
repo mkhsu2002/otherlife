@@ -1,5 +1,5 @@
-import { pilots } from "./stories.js?v=2";
-export const sources = {
+import { allStories, newSources } from "./stories-all.js?rev=launch";
+const baseSources = {
   "cambrian-2": {
     name: "Smithsonian",
     url: "https://qrius.si.edu/taxonomy/term/11906",
@@ -37,11 +37,13 @@ export const sources = {
     checked: "2026-10-23",
   },
 };
+export const sources = { ...baseSources, ...newSources };
 export function knowledgeFor(key) {
+  const stories = allStories;
   return {
-    time: pilots[key]?.time,
+    time: stories[key]?.time,
     note:
-      pilots[key]?.note ||
+      stories[key]?.note ||
       "這段情境使用類群層級的簡化設定，行為與事件是想像故事。",
     source: sources[key],
   };
