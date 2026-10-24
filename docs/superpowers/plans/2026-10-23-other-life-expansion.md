@@ -1,5 +1,7 @@
 # OTHER LIFE Implementation Plan
 
+> 2026-10-23歷史階段紀錄：後續熟悉物種與72張插畫改版已取代部分名單、檔案結構與存檔命名。現況以README、child-friendly-worlds.md及release-verification.md最新段落為準。
+
 狀態：2026-10-23使用者核准設計後已完成實作、驗證與正式發布；證據見../../release-verification.md。
 
 **Goal:** OTHER LIFE品牌、72生命與清楚的下一步，完整驗證後正式發布。

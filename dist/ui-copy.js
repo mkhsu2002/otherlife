@@ -1,4 +1,21 @@
 export const uiEnglish = {
+  "先遇見一個熟悉的朋友": "Meet a familiar friend first",
+  "點一張圖，開始這次生命。": "Pick a picture to begin this life.",
+  "開始這一生 →": "Begin this life →",
+
+  "故事為想像情節；插畫呈現主要特徵，不是精確的物種復原圖。": "The story is imagined. Illustrations show key features, not exact species reconstructions.",
+  "這次想去哪個世界？": "Which world will you visit?",
+  "讓地球決定 · 全世界隨機": "Let Earth decide · Any world",
+  "跨越時空，遇見不同的生命": "Meet different lives across time",
+  "也許是海裡，一個安靜的小生命。": "or a quiet little life beneath the sea.",
+  "從遠古，到今天": "From ancient Earth to today",
+  個世界: "worlds",
+  瀏覽世界: "Browse worlds",
+  所有世界: "All worlds",
+  "時空、棲地與生命形態一起揭曉。每個起點，都有自己的風景。": "Meet your time, habitat and life form. Every beginning has its own landscape.",
+  "；指定世界則每種約": " probability; within one world, about",
+
+  "的手繪插畫": " · Hand-painted illustration",
   "臺北市環保局 · 臺北市涼適點專區": "Taipei Department of Environmental Protection · Cool Places",
   "約 3.26 億至 3 億年前": "About 326–300 million years ago",
   "約 1.99 億至 1.45 億年前": "About 199–145 million years ago",

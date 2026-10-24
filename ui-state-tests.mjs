@@ -6,7 +6,8 @@ import * as data from "./dist/data.js";
 import * as i18n from "./dist/i18n.js";
 import * as engine from "./dist/engine.js";
 import * as storage from "./dist/storage.js";
-import * as stories from "./dist/stories.js";
+import {allStories} from "./dist/stories-all.js";
+import * as art from "./dist/species-art.js";
 import * as knowledge from "./dist/knowledge.js";
 import * as sharing from "./dist/share.js";
 import * as music from "./dist/music.js";
@@ -48,7 +49,7 @@ function app(saved = new Map(), storageAvailable = true) {
     ...i18n,
     ...engine,
     ...storage,
-    ...stories,
+    ...art,
     ...knowledge,
     ...sharing,
     ...music,
@@ -98,7 +99,7 @@ test("every era completes four chapters, saves once, replays and renders collect
     }
     assert.equal(a.run("step"), 4);
     assert.equal(a.run("records.length"), 1);
-    assert.equal(JSON.parse(a.saved.get("earthlife-save")).records.length, 1);
+    assert.equal(JSON.parse(a.saved.get("otherlife-save")).records.length, 1);
     a.run("setView('collection');setView('about');setView('home')");
     a.node("#again").onclick();
     assert.equal(a.run("life"), null);
@@ -174,7 +175,7 @@ test("all catalog and event text has English translations without changing canon
       assert(!han.test(i18n.translateText(v, "en")), v);
     else if (v && typeof v === "object") Object.values(v).forEach(visit);
   }
-  visit({ eras: data.eras, stories: stories.coreStories });
+  visit({ eras: data.eras, stories: allStories });
   assert.equal(JSON.stringify(data), before);
 });
 test("every life and route renders in English through four chapters, results, collection and about", () => {
@@ -253,7 +254,7 @@ test("language preference persists independently of completed lives; unfinished 
   assert.equal(a.run("language"), "zh-Hant");
   a.run("setLanguage('en');start('modern')");
   assert.equal(saved.get("earthlife-language"), "en");
-  assert(saved.has("earthlife-save"));
+  assert(saved.has("otherlife-save"));
   a = app(saved);
   assert.equal(a.run("language"), "en");
   assert.equal(a.run("life"), null);
@@ -269,7 +270,7 @@ test("language preference persists independently of completed lives; unfinished 
   a.run("setLanguage('zh-Hant')");
   assert.equal(a.run("records.length"), 1);
   assert.equal(saved.get("earthlife-language"), "zh-Hant");
-  assert.equal(JSON.parse(saved.get("earthlife-save")).records.length, 1);
+  assert.equal(JSON.parse(saved.get("otherlife-save")).records.length, 1);
 });
 test("both languages work when browser storage is unavailable", () => {
   const a = app(new Map(), false);
@@ -324,11 +325,11 @@ test("repeated stale continue handlers never advance or save twice", () => {
 test("resuming own save after viewing a shared result restores own run and allows choices", () => {
   const a = app();
   a.run(
-    "beginRun({key:'cambrian-2',seed:99,choices:[]});step=0;renderLife();lifePaused();run={key:'modern-1',seed:42,choices:[0,1,0,1]};shared=true;life=lifeFor(run.key);step=4;setView('about')",
+    "beginRun({key:'marine-2',seed:99,choices:[]});step=0;renderLife();lifePaused();run={key:'modern-1',seed:42,choices:[0,1,0,1]};shared=true;life=lifeFor(run.key);step=4;setView('about')",
   );
   a.node("#aboutStart").onclick();
   a.node("resume button").onclick();
-  assert.equal(a.run("run.key"), "cambrian-2");
+  assert.equal(a.run("run.key"), "marine-2");
   assert.equal(a.run("run.seed"), 99);
   assert.equal(a.run("shared"), false);
   a.run("makeChoice(0)");
@@ -340,7 +341,7 @@ test("pending route and music language changes preserve the current journey", ()
   const saved = new Map();
   let a = app(saved);
   a.run(
-    "beginRun({key:'cambrian-0',seed:42,choices:[],});step=0;renderLife();makeChoice(1)",
+    "beginRun({key:'marine-0',seed:42,choices:[],});step=0;renderLife();makeChoice(1)",
   );
   const old = a.run("JSON.stringify({run,log,stats})");
   a = app(saved);
@@ -397,3 +398,17 @@ test("the journey log immediately reflects a committed choice before continuing"
   a.run("start('modern');step=0;renderLife();makeChoice(0)");
   assert(a.node(".life-log").innerHTML.includes("1 / 4"));
 });
+
+test('home picture invitations point to familiar valid lives in the active language',()=>{
+ const a=app();
+ for(const language of ['zh-Hant','en']){
+  a.run(`language='${language}';life=null;renderHome()`);
+  const html=a.node('#app').innerHTML;
+  const links=[...html.matchAll(/class="life-preview" href="([^"]+)"/g)].map(m=>m[1]);
+  assert.equal(links.length,6);
+  for(const link of links){const parsed=engine.parseRun(link);assert(parsed);assert.equal(parsed.kind,'c');assert.equal(parsed.language,language);}
+  if(language==='en')assertEnglish(html);
+ }
+});
+
+test('picture entry begins chapter one and a stale entry cannot reset progress',()=>{const a=app();a.run("start('marine')");const enter=a.node('#enterFromPicture').onclick;assert.equal(typeof enter,'function');enter();assert.equal(a.run('step'),0);a.run('makeChoice(0)');a.node('#continue').onclick();enter();assert.equal(a.run('step'),1);});

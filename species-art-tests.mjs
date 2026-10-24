@@ -1,0 +1,4 @@
+import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';import {createHash} from 'node:crypto';import {lifeKeys} from './dist/engine.js';import {speciesArt,speciesArtwork} from './dist/species-art.js';
+test('every playable life uses its own saved illustration',()=>{assert.equal(Object.keys(speciesArt).length,72);for(const key of lifeKeys){const file=speciesArtwork(key);assert(file,key);assert(fs.statSync('dist/'+file.replace(/^\.\//,'')).size>1000,key);}assert.equal(speciesArtwork('unknown'),null);});
+
+test('species illustrations are distinct real WebP files rather than repeated placeholders',()=>{const hashes=new Set();for(const src of Object.values(speciesArt)){const bytes=fs.readFileSync('dist/'+src.replace(/^\.\//,''));assert.equal(bytes.toString('ascii',0,4),'RIFF');assert.equal(bytes.toString('ascii',8,12),'WEBP');hashes.add(createHash('sha256').update(bytes).digest('hex'));}assert.equal(hashes.size,72);});

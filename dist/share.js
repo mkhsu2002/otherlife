@@ -1,6 +1,7 @@
-import { drawShareQR } from "./share-qr.js?rev=otherlife72";
-import { lifeFor, encodeRun } from "./engine.js?rev=otherlife72";
-import { translateText } from "./i18n.js?rev=otherlife72";
+import { speciesArtwork } from './species-art.js?rev=familiar72';
+import { drawShareQR } from "./share-qr.js?rev=familiar72";
+import { lifeFor, encodeRun } from "./engine.js?rev=familiar72";
+import { translateText } from "./i18n.js?rev=familiar72";
 export function shareURL(run, language, kind = "r") {
   return new URL(
     "/" + encodeRun(run, kind, language),
@@ -45,77 +46,25 @@ export function wrapLines(context, text, maxWidth) {
   if (line) lines.push(line);
   return lines;
 }
-let artPromise;
-export function loadShareArt() {
-  if (!artPromise)
-    artPromise = new Promise((resolve, reject) => {
-      const image = new Image();
-      const timer = setTimeout(() => reject(Error("Artwork timed out")), 8000);
-      image.onload = () => {
-        clearTimeout(timer);
-        resolve(image);
-      };
-      image.onerror = () => {
-        clearTimeout(timer);
-        reject(Error("Artwork unavailable"));
-      };
-      image.src = new URL(
-        "./assets/earthlife-share.webp",
-        import.meta.url,
-      ).href;
-    }).catch((error) => {
-      artPromise = null;
-      throw error;
-    });
-  return artPromise;
+const artPromises = new Map();
+export function loadShareArt(key) {
+  const path = key ? speciesArtwork(key) : "./assets/earthlife-share.webp";
+  if (!path) return Promise.reject(Error("Species artwork unavailable"));
+  if (!artPromises.has(path)) artPromises.set(path, new Promise((resolve, reject) => {
+    const image = new Image();
+    const timer = setTimeout(() => reject(Error("Artwork timed out")), 8000);
+    image.onload = () => { clearTimeout(timer); resolve(image); };
+    image.onerror = () => { clearTimeout(timer); reject(Error("Artwork unavailable")); };
+    image.src = new URL(path, import.meta.url).href;
+  }).catch(error => { artPromises.delete(path); throw error; }));
+  return artPromises.get(path);
 }
 function heroArt(c, image, x, y, w, h) {
-  c.save();
-  c.beginPath();
-  c.roundRect(x, y, w, h, 28);
-  c.clip();
-  if (image) {
-    const scale = Math.max(w / image.naturalWidth, h / image.naturalHeight),
-      width = image.naturalWidth * scale,
-      height = image.naturalHeight * scale;
-    c.drawImage(
-      image,
-      x + (w - width) / 2,
-      y + (h - height) / 2,
-      width,
-      height,
-    );
-  } else {
-    c.fillStyle = "#dce9dd";
-    c.fillRect(x, y, w, h);
-    c.fillStyle = "#84bfc2";
-    c.beginPath();
-    c.arc(x + w / 2, y + h / 2, h * 0.39, 0, Math.PI * 2);
-    c.fill();
-    c.fillStyle = "#bdcf8f";
-    c.beginPath();
-    c.ellipse(
-      x + w * 0.47,
-      y + h * 0.4,
-      w * 0.13,
-      h * 0.17,
-      -0.3,
-      0,
-      Math.PI * 2,
-    );
-    c.fill();
-    c.beginPath();
-    c.ellipse(
-      x + w * 0.55,
-      y + h * 0.65,
-      w * 0.07,
-      h * 0.18,
-      0.4,
-      0,
-      Math.PI * 2,
-    );
-    c.fill();
-  }
+  c.save(); c.beginPath(); c.roundRect(x,y,w,h,28); c.clip();
+  c.fillStyle = "#f7f5e9"; c.fillRect(x,y,w,h);
+  const scale=Math.min(w/image.naturalWidth,h/image.naturalHeight);
+  const width=image.naturalWidth*scale,height=image.naturalHeight*scale;
+  c.drawImage(image,x+(w-width)/2,y+(h-height)/2,width,height);
   c.restore();
 }
 export async function resultImage(run, result, language, portrait = false) {
@@ -124,7 +73,7 @@ export async function resultImage(run, result, language, portrait = false) {
       document.fonts.ready,
       new Promise((resolve) => setTimeout(resolve, 1200)),
     ]);
-  const art = await loadShareArt().catch(() => null),
+  const art = await loadShareArt(run.key),
     canvas = document.createElement("canvas");
   canvas.width = 1080;
   canvas.height = portrait ? 1920 : 1350;

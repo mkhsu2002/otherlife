@@ -96,7 +96,7 @@ test("backups reject a pending choice before the first chapter", async () => {
   assert.throws(() =>
     importState(
       JSON.stringify({
-        format: "earthlife",
+        format: "otherlife",
         records: [],
         unlocked: [],
         active,
@@ -110,7 +110,7 @@ test("a complete 72-life atlas round-trips through a backup", async () => {
   assert.equal(engine.lifeKeys.length, 72);
   const imported = importState(
     JSON.stringify({
-      format: "earthlife",
+      format: "otherlife",
       records: [],
       unlocked: engine.lifeKeys,
       active: null,
@@ -124,7 +124,7 @@ test("new life decisions offer a stat tradeoff rather than a dominating option",
   const signatures = new Set();
   let count = 0;
   for (const [key, story] of Object.entries(allStories)) {
-    if (Number(key.split("-")[1]) < 3) continue;
+    if (Number(key.split("-")[1]) < 3 && !["marine", "woodland"].includes(key.split("-")[0]) && !["cretaceous-2", "ancient-0", "preindustrial-0", "modern-0"].includes(key)) continue;
     count++;
     for (const event of story.chapters.flat()) {
       const [a, b] = event[2].map((choice) => choice[2]);
@@ -136,7 +136,7 @@ test("new life decisions offer a stat tradeoff rather than a dominating option",
       signatures.add(JSON.stringify([a, b]));
     }
   }
-  assert.equal(count, 48);
+  assert.equal(count, 58);
   assert(
     signatures.size >= 24,
     "different ecological decisions must use varied effects",

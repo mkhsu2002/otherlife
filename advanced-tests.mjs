@@ -7,8 +7,8 @@ try {
 test("result links reproduce every decision and reject malformed input", () => {
   assert(engine, "sharing engine must exist");
   for (const key of [
-    "cambrian-2",
-    "carboniferous-2",
+    "marine-2",
+    "woodland-2",
     "cretaceous-0",
     "iceage-0",
     "ancient-0",
@@ -75,7 +75,7 @@ test("discoveries persist beyond last 100; corrupt backups cannot replace state"
     { key: "modern-1", stats: [60, 45, 35], title: "x", date: 1, log: [] },
   ];
   let state = storage.normalizeState({
-    format: "earthlife",
+    format: "otherlife",
     records: initialRecords,
     unlocked: [],
     active: null,
@@ -97,7 +97,7 @@ test("discoveries persist beyond last 100; corrupt backups cannot replace state"
 });
 
 test("all core story text has English coverage and eight reachable events across seeds and routes", async () => {
-  const { coreStories } = await import("./dist/stories.js"),
+  const { allStories: coreStories } = await import("./dist/stories-all.js"),
     { translateText } = await import("./dist/i18n.js");
   for (const key of Object.keys(coreStories)) {
     const names = new Set();
@@ -118,7 +118,7 @@ test("all core story text has English coverage and eight reachable events across
 });
 
 test("backups reject impossible pending chapters and invalid records", () => {
-  const base = { format: "earthlife", records: [], unlocked: [], active: null };
+  const base = { format: "otherlife", records: [], unlocked: [], active: null };
   for (const active of [
     {
       run: { key: "modern-1", seed: 1, choices: [0] },

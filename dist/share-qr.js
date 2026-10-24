@@ -1,4 +1,4 @@
-import qrcode from "./vendor/qrcode.mjs?rev=otherlife72";
+import qrcode from "./vendor/qrcode.mjs?rev=familiar72";
 export function drawShareQR(context, url, x, y, size = 240) {
   const parsed = new URL(url);
   if (

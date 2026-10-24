@@ -1,13 +1,13 @@
-import { eras as lifeCatalog } from "./data.js?rev=otherlife72";
-import { allStoryEnglish as storyEnglish } from "./stories-all.js?rev=otherlife72";
-import { uiEnglish } from "./ui-copy.js?rev=otherlife72";
+import { eras as lifeCatalog } from "./data.js?rev=familiar72";
+import { allStoryEnglish as storyEnglish } from "./stories-all.js?rev=familiar72";
+import { uiEnglish } from "./ui-copy.js?rev=familiar72";
 // Display-only translations: canonical game data, saved keys and mechanics stay unchanged.
 export const english = {
   地球轉生所: "OTHER LIFE",
   地球轉生所首頁: "OTHER LIFE home",
   "地球轉生所｜下一次，成為誰？": "OTHER LIFE | Who will you become?",
-  "假如能重新出生，你會成為誰？跨越八個年代、七十二種生命的地球轉生冒險。":
-    "Who would you become if you could be born again? Explore eight eras and seventy-two lives on Earth.",
+  "假如能重新出生，你會成為誰？跨越八個世界、七十二種生命的地球轉生冒險。":
+    "Who would you become if you could be born again? Explore eight worlds and seventy-two lives on Earth.",
   開始旅程: "Begin a journey",
   生命圖鑑: "Life Atlas",
   關於實驗: "About",

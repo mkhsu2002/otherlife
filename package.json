@@ -5,7 +5,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "test": "node --test tests.mjs advanced-tests.mjs full-catalog-tests.mjs music-tests.mjs ui-state-tests.mjs share-card-tests.mjs",
+    "test": "node --test tests.mjs advanced-tests.mjs full-catalog-tests.mjs music-tests.mjs ui-state-tests.mjs share-card-tests.mjs species-art-tests.mjs",
     "check": "node scripts/check.mjs",
     "dev": "python3 -m http.server --directory dist 8765",
     "deploy": "wrangler pages deploy dist --project-name otherlife --branch main",

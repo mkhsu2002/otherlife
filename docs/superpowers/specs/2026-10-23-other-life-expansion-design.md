@@ -1,5 +1,7 @@
 # OTHER LIFE：72種生命與清楚的旅程流程
 
+> 2026-10-23歷史階段紀錄：後續熟悉物種與72張插畫改版已取代部分名單、檔案結構與存檔命名。現況以README、child-friendly-worlds.md及release-verification.md最新段落為準。
+
 狀態：2026-10-23使用者已核准並授權實作、驗證與發布；已完成實作、必要驗證與正式發布，證據見release-verification.md。
 
 ## 目標與範圍

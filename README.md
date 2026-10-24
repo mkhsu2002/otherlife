@@ -26,15 +26,15 @@ AI 大幅降低了把想法做出來的門檻。但能做出來之後，更重�
 
 - 正式網站：https://otherlife.icareu.tw/
 - 唯一開發來源：https://github.com/mkhsu2002/otherlife ，正式分支 `main`。
-- 8個年代、72種生命，每代9種；每種4章、8個可達事件、3個分支結局，共576事件與216個結局標題。
-- 自由抽籤、指定年代、今日共同起點、結果回顧、生命圖鑑與同籤挑戰。
+- 8個世界、72種生命，每個世界9種；每種4章、8個可達事件、3個分支結局，共576事件與216個結局標題。
+- 自由抽籤、指定世界、今日共同起點、結果回顧、生命圖鑑與同籤挑戰。
 - 遊戲機率與三項數值屬敘事設計，不是實際出生、存活或生命價值評分。
 - 完整繁體中文／英文；語言切換保留當前旅程。揭曉、四章旅程、結局有階段標示；選擇後顯示後果並聚焦明確的下一章按鈕，最後一章前往結局。
-- 新增48種生命的選項各有數值取捨，不提供每項數值都更好的單一選項。自由抽籤每種約1/72，指定年代約1/9；是遊戲設計而非自然機率。
-- 結果分享例：https://otherlife.icareu.tw/#r=carboniferous-1.42.0101.zh-Hant
-- 同籤挑戰例：https://otherlife.icareu.tw/#c=carboniferous-1.42.zh-Hant
+- 本輪新寫或替換故事的選項各有數值取捨，不提供每項數值都更好的單一選項。自由抽籤每種約1/72，指定世界約1/9；是遊戲設計而非自然機率。
+- 結果分享例：https://otherlife.icareu.tw/#r=marine-0.42.0101.zh-Hant
+- 同籤挑戰例：https://otherlife.icareu.tw/#c=marine-0.42.zh-Hant
 - 分享結果唯讀，不會自動加入朋友的圖鑑；對方可從同一起點遊玩。分享參數只含生命ID、種子、選擇與語言，沒有個人資料或整本圖鑑。
-- 系統分享、LINE／Facebook／X入口與PNG貼文／限動卡；Instagram／Threads可使用下載圖片或系統分享。玩家自行最終送出，不自動發文。貼文／限動卡包含地球插畫與連往該次結果的QR code；共用OG圖包含首頁QR，不宣稱每個結果有不同社群預覽。
+- 系統分享、LINE／Facebook／X入口與PNG貼文／限動卡；Instagram／Threads可使用下載圖片或系統分享。玩家自行最終送出，不自動發文。貼文／限動卡包含該次生命的專屬手繪插畫與連往該次結果的QR code；共用OG圖包含首頁QR，不宣稱每個結果有不同社群預覽。
 
 ## 輕音樂
 
@@ -44,19 +44,18 @@ AI 大幅降低了把想法做出來的門檻。但能做出來之後，更重�
 
 ## 資料與內容查核
 
-- 無帳號、後端、資料庫或雲端存檔。`earthlife-save`保存本機圖鑑、最近100段旅程與未完成進度；已解鎖生命獨立保留。`earthlife-language`與`earthlife-music-volume`保存偏好。
+- 無帳號、後端、資料庫或雲端存檔。`otherlife-save`保存本機圖鑑、最近100段旅程與未完成進度；已解鎖生命獨立保留。`earthlife-language`與`earthlife-music-volume`保存偏好。
 - 提供JSON備份匯入／匯出與清除資料；匯入上限250KB且驗證資料格式。匯入會取代當前圖鑑，想保留兩份時先匯出。
 - 目前為正式宣傳前的單一乾淨模型，沒有舊規則分流、舊連結相容或歷史存檔遷移。
-- 日期與地點依各生命的來源情境呈現；年代篩選顯示情境範圍，不宣稱同一紀的所有生命同時存在。
-- [內容與來源索引](docs/content-audit.md)涵蓋全部72種；原24種與新增48種的實際查核範圍分別見`docs/research-*.md`及`docs/research-expansion-*.md`。故事細節是有證據界線的想像，不是完整生物／歷史重建。
+- 日期與地點依各生命的來源情境呈現；世界篩選區分當代棲地與歷史時段，歷史時段顯示情境範圍，不宣稱同一紀的所有生命同時存在。
+- [內容與來源索引](docs/content-audit.md)涵蓋全部72種；本輪研究見`docs/research-familiar-worlds.md`、`docs/research-familiar-overrides.md`、`docs/research-companions.md`；沿用故事仍依各筆來源範圍，其早期研究文件已註明歷史狀態。故事細節是有證據界線的想像，不是完整生物／歷史重建。
 - 主機平台有基本Cloudflare流量統計，公開隱私文案有說明。遊戲不要求姓名／電子郵件、不上傳圖鑑，也沒有自己的分析後端。
 
 ## 專案結構
 
-- `dist/data.js`：年代／基本目錄、抽選與數值純函式。
-- `dist/stories.js`、`stories-early.js`、`stories-middle.js`、`stories-recent.js`：原24種雙語故事。
-- `dist/expansion-early.js`、`expansion-middle.js`、`expansion-recent.js`：新增48種雙語故事、目錄與來源。
-- `dist/story-kit.js`：共用故事結構與雙語驗證；`stories-all.js`整合故事與情境資料。
+- `dist/lives-*.js`：8個目前世界，每檔9生命的目錄、雙語故事與來源。
+- `dist/stories-all.js`：唯一目錄／故事／翻譯／來源匯總；`data.js`提供抽選與數值純函式。
+- `dist/species-art.js`、`dist/assets/species/*.webp`：每生命一張插畫的明確對應，支援揭曉、圖鑑、結果與分享卡。
 - `dist/engine.js`：唯一遊戲規則、種子、分支、結果重播與分享參數驗證。
 - `dist/knowledge.js`：來源與證據範圍。
 - `dist/storage.js`：本機資料、備份驗證與永久解鎖。
@@ -75,7 +74,7 @@ Cloudflare Pages專案`otherlife`，正式分支`main`，輸出`dist/`，帳號I
 CLOUDFLARE_ACCOUNT_ID=82af99e90d342a30d2386efaa8ef4966 npx wrangler pages deploy dist --project-name otherlife --branch main
 ```
 
-使用安全儲存中的Wrangler授權，沒有repo／runtime secret。完成須核對GitHub、Cloudflare部署commit、公開資產及遊戲／分享／音樂行為。[發布驗證](docs/release-verification.md)記錄本次結果。主機對資產有快取，入口與模組的`?rev=otherlife72`只用於部署快取識別，不是多套遊戲規則。
+使用安全儲存中的Wrangler授權，沒有repo／runtime secret。完成須核對GitHub、Cloudflare部署commit、公開資產及遊戲／分享／音樂行為。[發布驗證](docs/release-verification.md)記錄本次結果。主機對資產有快取，入口與模組的`?rev=familiar72`只用於部署快取識別，不是多套遊戲規則。
 
 GitHub品質檢查只在遊戲來源、測試、套件／部署設定或workflow變更時觸發；docs-only不啟動完整CI或部署，沒有排程空跑。
 
@@ -83,6 +82,14 @@ GitHub品質檢查只在遊戲來源、測試、套件／部署設定或workflow
 
 Copyright © 2026 M.K. 本repo原創程式、圖像與音樂採[MIT License](LICENSE)。作者：[M.K. Bio](https://mkhsu.icareu.tw/)。參考作品的致謝不代表取得其程式、美術或資料授權；外部資源保有各自權利。
 
-第三方QR產生器qrcode-generator 2.0.4採MIT，授權見`dist/vendor/LICENSE.qrcode.txt`；jsQR 1.4.0採Apache-2.0，僅用於開發測試，不送至玩家瀏覽器。分享插畫是概念性地球意象，非特定年代的地理重建。
+第三方QR產生器qrcode-generator 2.0.4採MIT，授權見`dist/vendor/LICENSE.qrcode.txt`；jsQR 1.4.0採Apache-2.0，僅用於開發測試，不送至玩家瀏覽器。物種插畫採柔和水彩繪本風格；共用OG採六種熟悉生命的插畫拼圖與網站QR code。
 
 共用社群預覽可由`scripts/social-cover.mjs`重建：以靜態HTTP服務repo根目錄，在瀏覽器呼叫`socialCover()`並以1200×630儲存Canvas；底圖與QR皆使用repo本機資產。
+
+## 親切物種與插畫
+
+海洋、森林是當代世界；侏羅紀、白堊紀、更新世、古典、前工業、當代地球保留各自時間與地點。寒武／石炭冷門生命已移出目前名單，不把熟悉現生動物放回錯誤年代。名稱優先用孩子可聯想到的動物家族，精確類群與拉丁名放在小筆記；相同動物在不同時空可有不同旅程，因此72是可玩生命情境數。
+
+物種插畫以imagegen逐張生成，沿用網站奶油紙色、柔和藍綠、赭色與水彩筆觸。每批最多6張，完成落檔、768px WebP轉換、肉眼檢查、manifest引用後才進下一批。圖像用contain保留完整身體，不用emoji或共用地球冒充物種。詳見`docs/illustration-audit.md`。
+
+生命身份更換後使用唯一`otherlife-save`／`format: otherlife`；不讀取舊名單的紀錄，避免把原職業故事當成狗、馬、貓，沒有舊流程分流或遷移。語言與音量偏好保留。

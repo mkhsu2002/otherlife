@@ -1,56 +1,14 @@
-import * as expansionEarly from "./expansion-early.js?rev=otherlife72";
-import * as expansionMiddle from "./expansion-middle.js?rev=otherlife72";
-import * as expansionRecent from "./expansion-recent.js?rev=otherlife72";
-import { coreStories, storyEnglish } from "./stories.js?rev=otherlife72";
-import {
-  stories as early,
-  translations as earlyEnglish,
-  sources as earlySources,
-  profiles as earlyProfiles,
-} from "./stories-early.js?rev=otherlife72";
-import {
-  stories as middle,
-  translations as middleEnglish,
-  sources as middleSources,
-  profiles as middleProfiles,
-} from "./stories-middle.js?rev=otherlife72";
-import {
-  stories as recent,
-  translations as recentEnglish,
-  sources as recentSources,
-  profiles as recentProfiles,
-} from "./stories-recent.js?rev=otherlife72";
-export const allStories = {
-  ...coreStories,
-  ...early,
-  ...middle,
-  ...recent,
-  ...expansionEarly.stories,
-  ...expansionMiddle.stories,
-  ...expansionRecent.stories,
-};
-export const allStoryEnglish = {
-  ...storyEnglish,
-  ...earlyEnglish,
-  ...middleEnglish,
-  ...recentEnglish,
-  ...expansionEarly.translations,
-  ...expansionMiddle.translations,
-  ...expansionRecent.translations,
-};
-export const newSources = {
-  ...earlySources,
-  ...middleSources,
-  ...recentSources,
-  ...expansionEarly.sources,
-  ...expansionMiddle.sources,
-  ...expansionRecent.sources,
-};
-export const profiles = {
-  ...earlyProfiles,
-  ...middleProfiles,
-  ...recentProfiles,
-  ...expansionEarly.profiles,
-  ...expansionMiddle.profiles,
-  ...expansionRecent.profiles,
-};
+import * as w0 from './lives-marine.js?rev=familiar72';
+import * as w1 from './lives-woodland.js?rev=familiar72';
+import * as w2 from './lives-jurassic.js?rev=familiar72';
+import * as w3 from './lives-cretaceous.js?rev=familiar72';
+import * as w4 from './lives-iceage.js?rev=familiar72';
+import * as w5 from './lives-ancient.js?rev=familiar72';
+import * as w6 from './lives-preindustrial.js?rev=familiar72';
+import * as w7 from './lives-modern.js?rev=familiar72';
+const worlds=[w0,w1,w2,w3,w4,w5,w6,w7];
+export const catalogWorlds=worlds.map(w=>w.world);
+export const allStories=Object.assign({},...worlds.map(w=>w.stories));
+export const allStoryEnglish=Object.assign({},...worlds.map(w=>w.translations));
+export const newSources=Object.assign({},...worlds.map(w=>w.sources));
+export const profiles={};

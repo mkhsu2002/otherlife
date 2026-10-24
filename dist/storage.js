@@ -1,5 +1,5 @@
-import { lifeFor, validRun, lifeKeys } from "./engine.js?rev=otherlife72";
-export const STORAGE_KEY = "earthlife-save";
+import { lifeFor, validRun, lifeKeys } from "./engine.js?rev=familiar72";
+export const STORAGE_KEY = "otherlife-save";
 const recordOK = (r) =>
   r &&
   lifeFor(r.key) &&
@@ -25,12 +25,12 @@ export function activeOK(a) {
   );
 }
 export function normalizeState(raw) {
-  const s = raw?.format === "earthlife" ? raw : {};
+  const s = raw?.format === "otherlife" ? raw : {};
   const records = (Array.isArray(s.records) ? s.records : [])
     .filter(recordOK)
     .slice(0, 100);
   return {
-    format: "earthlife",
+    format: "otherlife",
     records,
     unlocked: [
       ...new Set(
@@ -58,7 +58,7 @@ export function importState(text) {
   const s = JSON.parse(text);
   if (
     !s ||
-    s.format !== "earthlife" ||
+    s.format !== "otherlife" ||
     !Array.isArray(s.records) ||
     s.records.length > 100 ||
     !s.records.every(recordOK) ||

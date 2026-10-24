@@ -17,7 +17,7 @@ writeFileSync(
 
 目前${lifeKeys.length}種生命，每種4章、8個可達事件、3個結局。來源查核日期逐項沿用實際研究紀錄，不因重建索引自動更新。正式發布證據見[發布驗證](release-verification.md)。
 
-原24種的研究見research-early/middle/recent.md；新增48種見research-expansion-early/middle/recent.md。數值與具體遭遇是原創敘事，不是自然機率或化石逐日紀錄。
+本輪熟悉物種與替換故事的研究見research-familiar-worlds.md、research-familiar-overrides.md、research-companions.md。其他沿用故事的較早研究紀錄保留其原始範圍與歷史註記。數值與具體遭遇是原創敘事，不是自然機率或化石逐日紀錄。
 
 | ID | 生命 | 情境時間 | 棲地與地點 | 來源與證據範圍 | 查核日期 |
 |---|---|---|---|---|---|

@@ -1,5 +1,5 @@
-import { eras, resolveStats, chooseLife } from "./data.js?rev=otherlife72";
-import { allStories, profiles } from "./stories-all.js?rev=otherlife72";
+import { eras, resolveStats, chooseLife } from "./data.js?rev=familiar72";
+import { allStories } from "./stories-all.js?rev=familiar72";
 export const lifeKeys = Object.keys(allStories);
 export function seeded(seed) {
   let n = seed >>> 0;
@@ -21,12 +21,7 @@ export function lifeFor(key) {
     }
   }
   if (!base) return null;
-  const profile = profiles[key] || {};
   const species = [...base.species];
-  if (key === "cretaceous-2") species[1] = "✦";
-  if (profile.habitat) species[2] = profile.habitat;
-  if (profile.location) species[3] = profile.location;
-  if (profile.intro) species[5] = profile.intro;
   return {
     ...base,
     era: { ...base.era, time: allStories[key]?.time || base.era.time },
@@ -119,7 +114,6 @@ export function freshRun(filter = "all") {
 }
 
 const eraTimes = {
-  carboniferous: "約 3.26 億至 3 億年前",
   jurassic: "約 1.99 億至 1.45 億年前",
   cretaceous: "約 8,500 萬至 6,600 萬年前",
   iceage: "約 3.6 萬至 1.3 萬年前",
